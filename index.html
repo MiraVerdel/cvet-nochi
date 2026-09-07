@@ -3,22 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цвет ночи: легенда аметиста • Мира Вердель</title>
+    <title>Цвет ночи • Мира Вердель</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Базовые настройки темы */
+        body {
+            background-color: #0d0b14;
+            color: #e2dfed;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* Шапка */
+        header {
+            text-align: center;
+            padding: 15px 15px 25px;
+            border-bottom: 1px solid #2a1f3d;
+            background-color: #130f1e;
+            position: relative;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 700px;
+            margin: 0 auto 10px;
+        }
+
+        .home-btn {
+            background-color: #1c152c;
+            color: #be95ff;
+            border: 1px solid #4a336e;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        #font-select {
+            background-color: #1c152c;
+            color: #d1c4e9;
+            border: 1px solid #4a336e;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .font-controls button {
+            background-color: #1c152c;
+            color: #d1c4e9;
+            border: 1px solid #4a336e;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        #font-size-display {
+            font-size: 0.8rem;
+            color: #9f86c0;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .font-family-selector {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .book-title {
+            margin: 10px 0 0;
+            font-size: 1.8rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .book-subtitle {
+            color: #9f86c0;
+            font-size: 0.85rem;
+            margin-top: 3px;
+            letter-spacing: 1.5px;
+        }
+
+        .author-name {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #be95ff;
+            text-shadow: 0 0 12px rgba(190, 149, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .reader-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 25px 20px;
+            font-size: 18px;
+            transition: font-size 0.1s ease;
+        }
+
+        .cover-placeholder {
+            width: 180px;
+            height: 260px;
+            margin: 0 auto 20px;
+            border: 2px dashed #4a336e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7a6b94;
+            font-size: 0.85rem;
+            background-color: #130f1e;
+        }
+
+        .book-meta-card {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #130f1e;
+            border: 1px solid #2a1f3d;
+            border-radius: 8px;
+        }
+
+        .meta-badge-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .genre-badge {
+            background-color: #1c152c;
+            color: #be95ff;
+            border: 1px solid #4a336e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .age-badge {
+            background-color: #2d1830;
+            color: #ff85a1;
+            border: 1px solid #6e2a4a;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tag {
+            color: #9f86c0;
+            font-size: 0.8rem;
+            background: rgba(42, 31, 61, 0.4);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .book-description, .table-of-contents {
+            background-color: #130f1e;
+            border: 1px solid #2a1f3d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .book-description h3, .table-of-contents h3 {
+            color: #be95ff;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #2a1f3d;
+            padding-bottom: 6px;
+        }
+
+        .book-description p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d1c4e9;
+        }
+
+        .chapters-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .chapters-list li {
+            margin-bottom: 10px;
+        }
+
+        .chapters-list a {
+            display: flex;
+            gap: 10px;
+            color: #e2dfed;
+            text-decoration: none;
+            padding: 10px;
+            background-color: #1c152c;
+            border: 1px solid #3d2b5a;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .chapters-list a:hover {
+            border-color: #be95ff;
+            background-color: #251b3b;
+        }
+
+        .ch-num {
+            color: #be95ff;
+            font-weight: 600;
+        }
+
+        .chapter h2 {
+            font-size: 1.4em;
+            color: #be95ff;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .chapter p {
+            margin-bottom: 18px;
+            text-indent: 1.5em;
+        }
+
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #2a1f3d;
+        }
+
+        .nav-btn {
+            background-color: #1c152c;
+            color: #d1c4e9;
+            border: 1px solid #4a336e;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 0.85rem;
+            color: #7a6b94;
+        }
+
+        .author-inline {
+            color: #be95ff;
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <div class="top-bar">
-            <select id="chapter-select" onchange="goToChapter(this.value)">
-                <option value="" disabled selected>📖 Оглавление</option>
-                <option value="ch1">Глава 1: Горячие пирожки</option>
-            </select>
+            <button class="home-btn" onclick="showBookInfo()">🏛 К книге</button>
 
             <div class="font-controls">
                 <button onclick="changeFontSize(-2)">A-</button>
@@ -37,63 +313,113 @@
         </div>
 
         <h1 class="book-title">ЦВЕТ НОЧИ</h1>
-        <p class="book-subtitle">ЛЕГЕНДА АМЕТИСТА • ТОМ 1</p>
+        <p class="book-subtitle">ТОМ 1</p>
         <p class="author-name">Мира Вердель</p>
     </header>
 
     <main class="reader-container" id="reader">
-        <article class="chapter" id="ch1">
-            <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
 
-            <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
+        <!-- ГЛАВНАЯ СТРАНИЦА КНИГИ -->
+        <section id="book-info" class="book-info-screen">
             
-            <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
-            
-            <p>– Вот дерьмо...</p>
-            
-            <p>Мой обед остался на столе. Его, похоже, придётся выкинуть, если Гаррик не съест мои пирожки с мясом... Что ж, на перерыве придётся лететь так быстро, чтобы успеть обратно. Полчаса на перерыв в такие моменты кажутся секундами.</p>
-            
-            <p>Спустя два часа город начал оживать: шум, болтовня, недовольное бурчание. Солнце начало захватывать своими лучами остатки ночи. Я не любил раннее утро, мне нравилось сидеть в тени, но, к сожалению, вечерне-ночное дежурство досталось Гаррику. Впрочем, на двух работах я хоть и не живу как Лука, а явно получше Гаррика. Но его самомнения хватит на всю Воздушную столицу и пару лодочек. А таких воздушных здесь немало — казалось, их эго пахло по всему городу скисшим молоком.</p>
-            
-            <p>Я не заметил, как прозвенел первый колокол. Быстро схватив сумку и фляжку, взлетел как можно быстрее в центральное кольцо.</p>
-            
-            <p>Потоки воздуха были благосклонны ко мне, и за десять минут я приземлился у шатра огненных, где торговал один из моих работодателей. В отличие от Грэгора, дядюшка Рони был добрым, никогда не обманывал. Казалось, его улыбка с усами обнимает весь мир своей чистотой и доброжелательностью.</p>
-            
-            <p>– Ох, Ю'шка, чего это ж тут делает наш защитник воздушных просторов в свой рабочий день? Неужто по мне соскучился-то? А-а-а, – длинно протянул тот, – опять забыл свой обед!</p>
-            
-            <p>Хохотнул он, а я опустил глаза в пол.</p>
-            
-            <p>– Ой-ой-ой не гоже ходить голодным на службе, тишина и спокойствие нашего города зависит от сытых стражников. Ты это тут, торопись давай, а то не успеешь.</p>
-            
-            <p>Он протянул мне два завернутых пирожка с мясом, а я отдал два медных азара, которые отсчитал в кармане по пути.</p>
-            
-            <p>– Давай, удачи тебе, Ю'ш!</p>
-            
-            <p>– Да, спасибо, дядя Рони, – быстро сказал я и взлетел.</p>
-            
-            <p>Как только мои сапоги коснулись каменного покрытия крыши, прозвенел колокол.</p>
-            
-            <p>– Что ж, осталось четыре часа...</p>
-            
-            <p>Развернув пирожки, я почувствовал от них тепло и вспомнил дядюшку Рони. Они грели мне душу, ведь не каждый чистокровка так относится к полукровке, особенно учитывая, что тот – огненный. Многие относятся к таким, как я, с пренебрежением. Тем более с моей внешностью. Меня судят постоянно: похож на снежного? Четыре крыла? Такого не должно быть! Разве могут водный и воздушный породить такое уродство? Тем более взглянуть друг на друга...</p>
-            
-            <p>Извольте, с такой внешностью одни беды и угнетения. Ни у кого нет четырёх крыльев... Это изматывает... опустошает... изводит...</p>
-            
-            <p>А к чему это я? Ах, да.</p>
-            
-            <p>Дядя Рони знает меня ещё с тринадцати лет. Сначала я помогал бескорыстно, но тот сам решил: работаю – значит, надо платить. Мне нравилось, меня начали замечать, подбадривать. Он стал для меня тем самым дедушкой, которого у меня никогда не было.</p>
-            
-            <p>Откусив первый кусок, я чуть не заплакал:</p>
-            
-            <p>– Горячо...</p>
-            
-            <p>Что ж, по меркам огненных это тёпленько, на троечку, но я воздушный — для нас это пожар во рту. Вот прохвост, никогда не упустит способа надо мной подшутить! От такого абсурда я засмеялся, ведь мне буквально навредил не враг, а обычный горячий пирожок...</p>
-        </article>
+            <div class="cover-placeholder">
+                <span>[ Место для обложки ]</span>
+            </div>
 
-        <nav class="chapter-nav">
-            <button class="nav-btn" disabled>← Пред. глава</button>
-            <button class="nav-btn" disabled>След. глава →</button>
-        </nav>
+            <div class="book-meta-card">
+                <div class="meta-badge-row">
+                    <span class="genre-badge">Тёмное фэнтези / Фэнтези-триллер</span>
+                    <span class="age-badge">16+</span>
+                </div>
+                
+                <div class="tags-container">
+                    <span class="tag">#двойная_игра</span>
+                    <span class="tag">#психология</span>
+                    <span class="tag">#выживание</span>
+                    <span class="tag">#серая_мораль</span>
+                    <span class="tag">#авторский_мир</span>
+                </div>
+            </div>
+
+            <!-- Аннотация -->
+            <div class="book-description">
+                <h3>О книге</h3>
+                <p>История о выживании в суровом мире, где каждый шаг может стать последним, а цена ошибки слишком высока.</p>
+            </div>
+
+            <!-- Оглавление -->
+            <div class="table-of-contents">
+                <h3>Оглавление</h3>
+                <ul class="chapters-list">
+                    <li>
+                        <a href="#" onclick="openChapter('ch1'); return false;">
+                            <span class="ch-num">Глава 1.</span>
+                            <span class="ch-title">Горячие пирожки и четыре крыла</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+        <!-- ТЕКСТ ГЛАВ -->
+        <div id="chapters-wrapper" class="chapters-wrapper" style="display: none;">
+            
+            <article class="chapter" id="ch1">
+                <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
+
+                <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
+                
+                <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
+                
+                <p>– Вот дерьмо...</p>
+                
+                <p>Мой обед остался на столе. Его, похоже, придётся выкинуть, если Гаррик не съест мои пирожки с мясом... Что ж, на перерыве придётся лететь так быстро, чтобы успеть обратно. Полчаса на перерыв в такие моменты кажутся секундами.</p>
+                
+                <p>Спустя два часа город начал оживать: шум, болтовня, недовольное бурчание. Солнце начало захватывать своими лучами остатки ночи. Я не любил раннее утро, мне нравилось сидеть в тени, но, к сожалению, вечерне-ночное дежурство досталось Гаррику. Впрочем, на двух работах я хоть и не живу как Лука, а явно получше Гаррика. Но его самомнения хватит на всю Воздушную столицу и пару лодочек. А таких воздушных здесь немало — казалось, их эго пахло по всему городу скисшим молоком.</p>
+                
+                <p>Я не заметил, как прозвенел первый колокол. Быстро схватив сумку и фляжку, взлетел как можно быстрее в центральное кольцо.</p>
+                
+                <p>Потоки воздуха были благосклонны ко мне, и за десять минут я приземлился у шатра огненных, где торговал один из моих работодателей. В отличие от Грэгора, дядюшка Рони был добрым, никогда не обманывал. Казалось, его улыбка с усами обнимает весь мир своей чистотой и доброжелательностью.</p>
+                
+                <p>– Ох, Ю'шка, чего это ж тут делает наш защитник воздушных просторов в свой рабочий день? Неужто по мне соскучился-то? А-а-а, – длинно протянул тот, – опять забыл свой обед!</p>
+                
+                <p>Хохотнул он, а я опустил глаза в пол.</p>
+                
+                <p>– Ой-ой-ой не гоже ходить голодным на службе, тишина и спокойствие нашего города зависит от сытых стражников. Ты это тут, торопись давай, а то не успеешь.</p>
+                
+                <p>Он протянул мне два завернутых пирожка с мясом, а я отдал два медных азара, которые отсчитал в кармане по пути.</p>
+                
+                <p>– Давай, удачи тебе, Ю'ш!</p>
+                
+                <p>– Да, спасибо, дядя Рони, – быстро сказал я и взлетел.</p>
+                
+                <p>Как только мои сапоги коснулись каменного покрытия крыши, прозвенел колокол.</p>
+                
+                <p>– Что ж, осталось четыре часа...</p>
+                
+                <p>Развернув пирожки, я почувствовал от них тепло и вспомнил дядюшку Рони. Они грели мне душу, ведь не каждый чистокровка так относится к полукровке, особенно учитывая, что тот – огненный. Многие относятся к таким, как я, с пренебрежением. Тем более с моей внешностью. Меня судят постоянно: похож на снежного? Четыре крыла? Такого не должно быть! Разве могут водный и воздушный породить такое уродство? Тем более взглянуть друг на друга...</p>
+                
+                <p>Извольте, с такой внешностью одни беды и угнетения. Ни у кого нет четырёх крыльев... Это изматывает... опустошает... изводит...</p>
+                
+                <p>А к чему это я? Ах, да.</p>
+                
+                <p>Дядя Рони знает меня ещё с тринадцати лет. Сначала я помогал бескорыстно, но тот сам решил: работаю – значит, надо платить. Мне нравилось, меня начали замечать, подбадривать. Он стал для меня тем самым дедушкой, которого у меня никогда не было.</p>
+                
+                <p>Откусив первый кусок, я чуть не заплакал:</p>
+                
+                <p>– Горячо...</p>
+                
+                <p>Что ж, по меркам огненных это тёпленько, на троечку, но я воздушный — для нас это пожар во рту. Вот прохвост, никогда не упустит способа надо мной подшутить! От такого абсурда я засмеялся, ведь мне буквально навредил не враг, а обычный горячий пирожок...</p>
+            </article>
+
+            <nav class="chapter-nav">
+                <button class="nav-btn" onclick="showBookInfo()">← К описанию</button>
+                <button class="nav-btn" disabled>След. глава →</button>
+            </nav>
+
+        </div>
+
     </main>
 
     <footer>
@@ -119,11 +445,16 @@
             document.getElementById('reader').style.fontFamily = fontFamily;
         }
 
-        function goToChapter(chapterId) {
-            const element = document.getElementById(chapterId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
+        function openChapter(chapterId) {
+            document.getElementById('book-info').style.display = 'none';
+            document.getElementById('chapters-wrapper').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showBookInfo() {
+            document.getElementById('chapters-wrapper').style.display = 'none';
+            document.getElementById('book-info').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
