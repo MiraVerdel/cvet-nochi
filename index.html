@@ -7,7 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 
     <style>
         :root {
@@ -103,10 +104,10 @@
         }
 
         #font-select {
-            max-width: 100px;
+            max-width: 110px;
         }
 
-        #font-size-display {
+        #font-size-display, #line-height-display {
             font-size: 0.75rem;
             color: var(--subtext-color);
             min-width: 30px;
@@ -133,7 +134,7 @@
             margin: 0 auto;
             padding: 20px 15px;
             font-size: 18px;
-            transition: font-size 0.1s ease;
+            transition: font-size 0.1s ease, line-height 0.1s ease;
         }
 
         .book-cover {
@@ -331,6 +332,8 @@
                 <select id="font-select" onchange="setFontFamily(this.value)">
                     <option value="'Cormorant Garamond', serif">Garamond</option>
                     <option value="Georgia, serif">Georgia</option>
+                    <option value="'Lora', serif">Lora</option>
+                    <option value="'Merriweather', serif">Merriweather</option>
                     <option value="'Arial', sans-serif">Arial</option>
                     <option value="'Courier New', monospace">Courier</option>
                 </select>
@@ -338,6 +341,10 @@
                 <button onclick="changeFontSize(-2)">A-</button>
                 <span id="font-size-display">18px</span>
                 <button onclick="changeFontSize(2)">A+</button>
+                
+                <button onclick="changeLineHeight(-0.1)" title="Уменьшить интервал">↕-</button>
+                <span id="line-height-display">1.8</span>
+                <button onclick="changeLineHeight(0.1)" title="Увеличить интервал">↕+</button>
             </div>
         </div>
         <h1 class="book-title">ЦВЕТ НОЧИ</h1>
@@ -422,6 +429,7 @@
 
     <script>
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
+        let currentLineHeight = parseFloat(localStorage.getItem('lineHeight')) || 1.8;
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
         let currentView = localStorage.getItem('currentView') || 'info';
@@ -431,8 +439,9 @@
             document.getElementById('font-select').value = currentFontFamily;
             setFontFamily(currentFontFamily);
             
-            // Применяем размер и тему
+            // Применяем размер, интервал и тему
             applyFontSize(currentFontSize);
+            applyLineHeight(currentLineHeight);
             if (currentTheme === 'sepia') document.body.classList.add('theme-sepia');
 
             // Восстанавливаем вкладку (чтение или меню)
@@ -480,9 +489,21 @@
             document.getElementById('reader').style.fontSize = size + 'px';
         }
 
+        function changeLineHeight(delta) {
+            currentLineHeight = Math.max(1.2, Math.min(2.4, currentLineHeight + delta));
+            currentLineHeight = Math.round(currentLineHeight * 10) / 10;
+            applyLineHeight(currentLineHeight);
+            localStorage.setItem('lineHeight', currentLineHeight);
+        }
+
+        function applyLineHeight(lh) {
+            document.getElementById('line-height-display').innerText = lh;
+            document.getElementById('reader').style.lineHeight = lh;
+        }
+
         function setFontFamily(fontFamily) {
             document.getElementById('reader').style.fontFamily = fontFamily;
-            localStorage.setItem('fontFamily', fontFamily); // Сохраняем семейство шрифта
+            localStorage.setItem('fontFamily', fontFamily);
         }
 
         function toggleTheme() {
@@ -494,7 +515,7 @@
         function openChapter(chapterId) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
-            localStorage.setItem('currentView', 'reading'); // Сохраняем статус чтения
+            localStorage.setItem('currentView', 'reading');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
         }
@@ -502,7 +523,7 @@
         function showBookInfo() {
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
-            localStorage.setItem('currentView', 'info'); // Сохраняем статус меню
+            localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
         }
