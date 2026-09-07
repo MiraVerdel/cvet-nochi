@@ -119,19 +119,17 @@
             transition: font-size 0.1s ease;
         }
 
-        .cover-placeholder {
-            width: 180px;
-            height: 260px;
-            margin: 0 auto 20px;
-            border: 2px dashed #4a336e;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7a6b94;
-            font-size: 0.85rem;
-            background-color: #130f1e;
-        }
+        .book-cover {
+    width: 180px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 8px;
+    border: 1px solid #4a336e;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(190, 149, 255, 0.2);
+}
+
 
         .book-meta-card {
             text-align: center;
@@ -321,10 +319,11 @@
 
         <!-- ГЛАВНАЯ СТРАНИЦА КНИГИ -->
         <section id="book-info" class="book-info-screen">
-            
-            <div class="cover-placeholder">
-                <span>[ Место для обложки ]</span>
-            </div>
+<img src="https://i.ibb.co/CLpVBJr/229-20260907183012.jpg" alt="Обложка Цвет Ночи" class="book-cover">
+
+
+
+
 
             <div class="book-meta-card">
                 <div class="meta-badge-row">
