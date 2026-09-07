@@ -10,23 +10,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Базовые настройки темы */
+        :root {
+            --bg-color: #0d0b14;
+            --card-bg: #130f1e;
+            --btn-bg: #1c152c;
+            --text-color: #e2dfed;
+            --accent-color: #be95ff;
+            --subtext-color: #9f86c0;
+            --border-color: #2a1f3d;
+        }
+
+        body.theme-sepia {
+            --bg-color: #f4ecd8;
+            --card-bg: #e8dfc8;
+            --btn-bg: #ded3b8;
+            --text-color: #433422;
+            --accent-color: #8c5a2b;
+            --subtext-color: #6e5438;
+            --border-color: #c8bc9e;
+        }
+
         body {
-            background-color: #0d0b14;
-            color: #e2dfed;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: 'Cormorant Garamond', Georgia, serif;
             margin: 0;
             padding: 0;
             line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Шапка */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-color);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
         header {
             text-align: center;
             padding: 15px 15px 25px;
-            border-bottom: 1px solid #2a1f3d;
-            background-color: #130f1e;
-            position: relative;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            position: sticky;
+            top: 0;
             z-index: 100;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
@@ -37,12 +68,14 @@
             align-items: center;
             max-width: 700px;
             margin: 0 auto 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .home-btn {
-            background-color: #1c152c;
-            color: #be95ff;
-            border: 1px solid #4a336e;
+            background-color: var(--btn-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
             padding: 5px 12px;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -50,9 +83,9 @@
         }
 
         #font-select {
-            background-color: #1c152c;
-            color: #d1c4e9;
-            border: 1px solid #4a336e;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 0.85rem;
@@ -65,18 +98,19 @@
             gap: 6px;
         }
 
-        .font-controls button {
-            background-color: #1c152c;
-            color: #d1c4e9;
-            border: 1px solid #4a336e;
+        .font-controls button, .theme-btn {
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             padding: 4px 10px;
             border-radius: 4px;
             font-size: 0.85rem;
+            cursor: pointer;
         }
 
         #font-size-display {
             font-size: 0.8rem;
-            color: #9f86c0;
+            color: var(--subtext-color);
             min-width: 35px;
             text-align: center;
         }
@@ -90,13 +124,13 @@
         .book-title {
             margin: 10px 0 0;
             font-size: 1.8rem;
-            color: #ffffff;
+            color: var(--text-color);
             letter-spacing: 2px;
             font-weight: 600;
         }
 
         .book-subtitle {
-            color: #9f86c0;
+            color: var(--subtext-color);
             font-size: 0.85rem;
             margin-top: 3px;
             letter-spacing: 1.5px;
@@ -106,8 +140,7 @@
             margin-top: 10px;
             font-size: 1.2rem;
             font-weight: 600;
-            color: #be95ff;
-            text-shadow: 0 0 12px rgba(190, 149, 255, 0.4);
+            color: var(--accent-color);
             letter-spacing: 1px;
         }
 
@@ -120,23 +153,22 @@
         }
 
         .book-cover {
-    width: 180px;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto 20px;
-    border-radius: 8px;
-    border: 1px solid #4a336e;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(190, 149, 255, 0.2);
-}
-
+            width: 180px;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+        }
 
         .book-meta-card {
             text-align: center;
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #130f1e;
-            border: 1px solid #2a1f3d;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
         }
 
@@ -149,9 +181,9 @@
         }
 
         .genre-badge {
-            background-color: #1c152c;
-            color: #be95ff;
-            border: 1px solid #4a336e;
+            background-color: var(--btn-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -176,7 +208,7 @@
         }
 
         .tag {
-            color: #9f86c0;
+            color: var(--subtext-color);
             font-size: 0.8rem;
             background: rgba(42, 31, 61, 0.4);
             padding: 2px 8px;
@@ -184,19 +216,19 @@
         }
 
         .book-description, .table-of-contents {
-            background-color: #130f1e;
-            border: 1px solid #2a1f3d;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 25px;
         }
 
         .book-description h3, .table-of-contents h3 {
-            color: #be95ff;
+            color: var(--accent-color);
             margin-top: 0;
             margin-bottom: 12px;
             font-size: 1.2rem;
-            border-bottom: 1px solid #2a1f3d;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 6px;
         }
 
@@ -204,7 +236,7 @@
             margin: 0;
             font-size: 0.95rem;
             line-height: 1.6;
-            color: #d1c4e9;
+            color: var(--text-color);
         }
 
         .chapters-list {
@@ -220,28 +252,27 @@
         .chapters-list a {
             display: flex;
             gap: 10px;
-            color: #e2dfed;
+            color: var(--text-color);
             text-decoration: none;
             padding: 10px;
-            background-color: #1c152c;
-            border: 1px solid #3d2b5a;
+            background-color: var(--btn-bg);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             transition: all 0.2s ease;
         }
 
         .chapters-list a:hover {
-            border-color: #be95ff;
-            background-color: #251b3b;
+            border-color: var(--accent-color);
         }
 
         .ch-num {
-            color: #be95ff;
+            color: var(--accent-color);
             font-weight: 600;
         }
 
         .chapter h2 {
             font-size: 1.4em;
-            color: #be95ff;
+            color: var(--accent-color);
             margin-top: 10px;
             margin-bottom: 20px;
             text-align: center;
@@ -258,13 +289,13 @@
             justify-content: space-between;
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #2a1f3d;
+            border-top: 1px solid var(--border-color);
         }
 
         .nav-btn {
-            background-color: #1c152c;
-            color: #d1c4e9;
-            border: 1px solid #4a336e;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             padding: 10px 16px;
             border-radius: 6px;
             font-size: 0.9rem;
@@ -276,25 +307,44 @@
             cursor: default;
         }
 
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: var(--btn-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
         footer {
             text-align: center;
             padding: 30px;
             font-size: 0.85rem;
-            color: #7a6b94;
+            color: var(--subtext-color);
         }
 
         .author-inline {
-            color: #be95ff;
+            color: var(--accent-color);
         }
     </style>
 </head>
 <body>
+
+    <div id="progress-bar"></div>
 
     <header>
         <div class="top-bar">
             <button class="home-btn" onclick="showBookInfo()">🏛 К книге</button>
 
             <div class="font-controls">
+                <button class="theme-btn" onclick="toggleTheme()">🎨 Тема</button>
                 <button onclick="changeFontSize(-2)">A-</button>
                 <span id="font-size-display">18px</span>
                 <button onclick="changeFontSize(2)">A+</button>
@@ -319,11 +369,7 @@
 
         <!-- ГЛАВНАЯ СТРАНИЦА КНИГИ -->
         <section id="book-info" class="book-info-screen">
-<img src="https://i.ibb.co/CLpVBJr/229-20260907183012.jpg" alt="Обложка Цвет Ночи" class="book-cover">
-
-
-
-
+            <img src="https://i.ibb.co/CLpVBJr/229-20260907183012.jpg" alt="Обложка Цвет Ночи" class="book-cover">
 
             <div class="book-meta-card">
                 <div class="meta-badge-row">
@@ -421,39 +467,70 @@
 
     </main>
 
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
     <footer>
         <p>© 2026 <span class="author-inline">Мира Вердель</span> • Все права защищены</p>
     </footer>
 
     <script>
-        let currentFontSize = 18;
+        let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
+        let currentTheme = localStorage.getItem('theme') || 'dark';
 
-        function updateFontSizeDisplay() {
-            document.getElementById('font-size-display').innerText = currentFontSize + 'px';
-            document.getElementById('reader').style.fontSize = currentFontSize + 'px';
+        document.addEventListener("DOMContentLoaded", () => {
+            applyFontSize(currentFontSize);
+            if (currentTheme === 'sepia') document.body.classList.add('theme-sepia');
+        });
+
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+
+            let topBtn = document.getElementById("back-to-top");
+            if (winScroll > 300) {
+                topBtn.style.display = "block";
+            } else {
+                topBtn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function changeFontSize(delta) {
-            currentFontSize += delta;
-            if (currentFontSize < 10) currentFontSize = 10;
-            if (currentFontSize > 32) currentFontSize = 32;
-            updateFontSizeDisplay();
+            currentFontSize = Math.max(12, Math.min(32, currentFontSize + delta));
+            applyFontSize(currentFontSize);
+            localStorage.setItem('fontSize', currentFontSize);
+        }
+
+        function applyFontSize(size) {
+            document.getElementById('font-size-display').innerText = size + 'px';
+            document.getElementById('reader').style.fontSize = size + 'px';
         }
 
         function setFontFamily(fontFamily) {
             document.getElementById('reader').style.fontFamily = fontFamily;
         }
 
+        function toggleTheme() {
+            document.body.classList.toggle('theme-sepia');
+            let isSepia = document.body.classList.contains('theme-sepia');
+            localStorage.setItem('theme', isSepia ? 'sepia' : 'dark');
+        }
+
         function openChapter(chapterId) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToTop();
         }
 
         function showBookInfo() {
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToTop();
         }
     </script>
 </body>
