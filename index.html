@@ -51,15 +51,16 @@
             transition: width 0.1s;
         }
 
+        /* Компактная шапка */
         header {
             text-align: center;
-            padding: 15px 15px 25px;
+            padding: 8px 10px 12px;
             border-bottom: 1px solid var(--border-color);
             background-color: var(--card-bg);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .top-bar {
@@ -67,106 +68,89 @@
             justify-content: space-between;
             align-items: center;
             max-width: 700px;
-            margin: 0 auto 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin: 0 auto 8px;
+            gap: 8px;
         }
 
         .home-btn {
             background-color: var(--btn-bg);
             color: var(--accent-color);
             border: 1px solid var(--border-color);
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
+            white-space: nowrap;
         }
 
-        #font-select {
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        select, button {
             background-color: var(--btn-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
             outline: none;
         }
 
-        .font-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .font-controls button, .theme-btn {
-            background-color: var(--btn-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            cursor: pointer;
+        #font-select {
+            max-width: 100px;
         }
 
         #font-size-display {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--subtext-color);
-            min-width: 35px;
+            min-width: 30px;
             text-align: center;
         }
 
-        .font-family-selector {
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: center;
-        }
-
         .book-title {
-            margin: 10px 0 0;
-            font-size: 1.8rem;
+            margin: 0;
+            font-size: 1.3rem;
             color: var(--text-color);
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-
-        .book-subtitle {
-            color: var(--subtext-color);
-            font-size: 0.85rem;
-            margin-top: 3px;
             letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .author-name {
-            margin-top: 10px;
-            font-size: 1.2rem;
+            margin: 2px 0 0;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--accent-color);
-            letter-spacing: 1px;
         }
 
         .reader-container {
             max-width: 700px;
             margin: 0 auto;
-            padding: 25px 20px;
+            padding: 20px 15px;
             font-size: 18px;
             transition: font-size 0.1s ease;
         }
 
         .book-cover {
-            width: 180px;
+            width: 160px;
             aspect-ratio: 2 / 3;
             object-fit: cover;
             display: block;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
         }
 
         .book-meta-card {
             text-align: center;
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 12px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -177,16 +161,16 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .genre-badge {
             background-color: var(--btn-bg);
             color: var(--accent-color);
             border: 1px solid var(--border-color);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
@@ -194,9 +178,9 @@
             background-color: #2d1830;
             color: #ff85a1;
             border: 1px solid #6e2a4a;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
             font-weight: 600;
         }
 
@@ -204,14 +188,14 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .tag {
             color: var(--subtext-color);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             background: rgba(42, 31, 61, 0.4);
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
         }
 
@@ -219,23 +203,23 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         .book-description h3, .table-of-contents h3 {
             color: var(--accent-color);
             margin-top: 0;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
+            padding-bottom: 4px;
         }
 
         .book-description p {
             margin: 0;
             font-size: 0.95rem;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--text-color);
         }
 
@@ -246,7 +230,7 @@
         }
 
         .chapters-list li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .chapters-list a {
@@ -254,11 +238,12 @@
             gap: 10px;
             color: var(--text-color);
             text-decoration: none;
-            padding: 10px;
+            padding: 8px 12px;
             background-color: var(--btn-bg);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s ease;
+            font-size: 0.95rem;
         }
 
         .chapters-list a:hover {
@@ -271,24 +256,24 @@
         }
 
         .chapter h2 {
-            font-size: 1.4em;
+            font-size: 1.3em;
             color: var(--accent-color);
-            margin-top: 10px;
-            margin-bottom: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
             text-align: center;
             font-weight: 600;
         }
 
         .chapter p {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             text-indent: 1.5em;
         }
 
         .chapter-nav {
             display: flex;
             justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 30px;
+            padding-top: 15px;
             border-top: 1px solid var(--border-color);
         }
 
@@ -296,10 +281,9 @@
             background-color: var(--btn-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .nav-btn:disabled {
@@ -316,17 +300,18 @@
             color: var(--accent-color);
             border: 1px solid var(--border-color);
             border-radius: 50%;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             font-size: 1.2rem;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            z-index: 1000;
         }
 
         footer {
             text-align: center;
-            padding: 30px;
-            font-size: 0.85rem;
+            padding: 20px;
+            font-size: 0.8rem;
             color: var(--subtext-color);
         }
 
@@ -342,57 +327,46 @@
     <header>
         <div class="top-bar">
             <button class="home-btn" onclick="showBookInfo()">🏛 К книге</button>
-
-            <div class="font-controls">
-                <button class="theme-btn" onclick="toggleTheme()">🎨 Тема</button>
+            <div class="controls-group">
+                <select id="font-select" onchange="setFontFamily(this.value)">
+                    <option value="'Cormorant Garamond', serif">Garamond</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Arial', sans-serif">Arial</option>
+                    <option value="'Courier New', monospace">Courier</option>
+                </select>
+                <button onclick="toggleTheme()" title="Сменить тему">🎨</button>
                 <button onclick="changeFontSize(-2)">A-</button>
                 <span id="font-size-display">18px</span>
                 <button onclick="changeFontSize(2)">A+</button>
             </div>
         </div>
-
-        <div class="font-family-selector">
-            <select id="font-select" onchange="setFontFamily(this.value)">
-                <option value="'Cormorant Garamond', serif">Garamond (Изящный)</option>
-                <option value="Georgia, serif">Georgia (Книжный)</option>
-                <option value="'Arial', sans-serif">Arial (Без засечек)</option>
-                <option value="'Courier New', monospace">Courier (Печатная машинка)</option>
-            </select>
-        </div>
-
         <h1 class="book-title">ЦВЕТ НОЧИ</h1>
-        <p class="book-subtitle">ТОМ 1</p>
-        <p class="author-name">Мира Вердель</p>
+        <p class="author-name">Мира Вердель • ТОМ 1</p>
     </header>
 
     <main class="reader-container" id="reader">
 
-        <!-- ГЛАВНАЯ СТРАНИЦА КНИГИ -->
         <section id="book-info" class="book-info-screen">
             <img src="https://i.ibb.co/CLpVBJr/229-20260907183012.jpg" alt="Обложка Цвет Ночи" class="book-cover">
 
             <div class="book-meta-card">
                 <div class="meta-badge-row">
-                    <span class="genre-badge">Тёмное фэнтези / Фэнтези-триллер</span>
+                    <span class="genre-badge">Тёмное фэнтези</span>
                     <span class="age-badge">16+</span>
                 </div>
-                
                 <div class="tags-container">
                     <span class="tag">#двойная_игра</span>
                     <span class="tag">#психология</span>
                     <span class="tag">#выживание</span>
                     <span class="tag">#серая_мораль</span>
-                    <span class="tag">#авторский_мир</span>
                 </div>
             </div>
 
-            <!-- Аннотация -->
             <div class="book-description">
                 <h3>О книге</h3>
                 <p>История о выживании в суровом мире, где каждый шаг может стать последним, а цена ошибки слишком высока.</p>
             </div>
 
-            <!-- Оглавление -->
             <div class="table-of-contents">
                 <h3>Оглавление</h3>
                 <ul class="chapters-list">
@@ -404,57 +378,32 @@
                     </li>
                 </ul>
             </div>
-
         </section>
 
-        <!-- ТЕКСТ ГЛАВ -->
         <div id="chapters-wrapper" class="chapters-wrapper" style="display: none;">
-            
             <article class="chapter" id="ch1">
                 <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
-
                 <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
-                
                 <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
-                
                 <p>– Вот дерьмо...</p>
-                
                 <p>Мой обед остался на столе. Его, похоже, придётся выкинуть, если Гаррик не съест мои пирожки с мясом... Что ж, на перерыве придётся лететь так быстро, чтобы успеть обратно. Полчаса на перерыв в такие моменты кажутся секундами.</p>
-                
                 <p>Спустя два часа город начал оживать: шум, болтовня, недовольное бурчание. Солнце начало захватывать своими лучами остатки ночи. Я не любил раннее утро, мне нравилось сидеть в тени, но, к сожалению, вечерне-ночное дежурство досталось Гаррику. Впрочем, на двух работах я хоть и не живу как Лука, а явно получше Гаррика. Но его самомнения хватит на всю Воздушную столицу и пару лодочек. А таких воздушных здесь немало — казалось, их эго пахло по всему городу скисшим молоком.</p>
-                
                 <p>Я не заметил, как прозвенел первый колокол. Быстро схватив сумку и фляжку, взлетел как можно быстрее в центральное кольцо.</p>
-                
                 <p>Потоки воздуха были благосклонны ко мне, и за десять минут я приземлился у шатра огненных, где торговал один из моих работодателей. В отличие от Грэгора, дядюшка Рони был добрым, никогда не обманывал. Казалось, его улыбка с усами обнимает весь мир своей чистотой и доброжелательностью.</p>
-                
                 <p>– Ох, Ю'шка, чего это ж тут делает наш защитник воздушных просторов в свой рабочий день? Неужто по мне соскучился-то? А-а-а, – длинно протянул тот, – опять забыл свой обед!</p>
-                
                 <p>Хохотнул он, а я опустил глаза в пол.</p>
-                
                 <p>– Ой-ой-ой не гоже ходить голодным на службе, тишина и спокойствие нашего города зависит от сытых стражников. Ты это тут, торопись давай, а то не успеешь.</p>
-                
                 <p>Он протянул мне два завернутых пирожка с мясом, а я отдал два медных азара, которые отсчитал в кармане по пути.</p>
-                
                 <p>– Давай, удачи тебе, Ю'ш!</p>
-                
                 <p>– Да, спасибо, дядя Рони, – быстро сказал я и взлетел.</p>
-                
                 <p>Как только мои сапоги коснулись каменного покрытия крыши, прозвенел колокол.</p>
-                
                 <p>– Что ж, осталось четыре часа...</p>
-                
                 <p>Развернув пирожки, я почувствовал от них тепло и вспомнил дядюшку Рони. Они грели мне душу, ведь не каждый чистокровка так относится к полукровке, особенно учитывая, что тот – огненный. Многие относятся к таким, как я, с пренебрежением. Тем более с моей внешностью. Меня судят постоянно: похож на снежного? Четыре крыла? Такого не должно быть! Разве могут водный и воздушный породить такое уродство? Тем более взглянуть друг на друга...</p>
-                
                 <p>Извольте, с такой внешностью одни беды и угнетения. Ни у кого нет четырёх крыльев... Это изматывает... опустошает... изводит...</p>
-                
                 <p>А к чему это я? Ах, да.</p>
-                
                 <p>Дядя Рони знает меня ещё с тринадцати лет. Сначала я помогал бескорыстно, но тот сам решил: работаю – значит, надо платить. Мне нравилось, меня начали замечать, подбадривать. Он стал для меня тем самым дедушкой, которого у меня никогда не было.</p>
-                
                 <p>Откусив первый кусок, я чуть не заплакал:</p>
-                
                 <p>– Горячо...</p>
-                
                 <p>Что ж, по меркам огненных это тёпленько, на троечку, но я воздушный — для нас это пожар во рту. Вот прохвост, никогда не упустит способа надо мной подшутить! От такого абсурда я засмеялся, ведь мне буквально навредил не враг, а обычный горячий пирожок...</p>
             </article>
 
@@ -462,9 +411,7 @@
                 <button class="nav-btn" onclick="showBookInfo()">← К описанию</button>
                 <button class="nav-btn" disabled>След. глава →</button>
             </nav>
-
         </div>
-
     </main>
 
     <button id="back-to-top" onclick="scrollToTop()">↑</button>
@@ -476,25 +423,47 @@
     <script>
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
         let currentTheme = localStorage.getItem('theme') || 'dark';
+        let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
+        let currentView = localStorage.getItem('currentView') || 'info';
 
         document.addEventListener("DOMContentLoaded", () => {
+            // Применяем сохраненный шрифт
+            document.getElementById('font-select').value = currentFontFamily;
+            setFontFamily(currentFontFamily);
+            
+            // Применяем размер и тему
             applyFontSize(currentFontSize);
             if (currentTheme === 'sepia') document.body.classList.add('theme-sepia');
+
+            // Восстанавливаем вкладку (чтение или меню)
+            if (currentView === 'reading') {
+                document.getElementById('book-info').style.display = 'none';
+                document.getElementById('chapters-wrapper').style.display = 'block';
+            } else {
+                document.getElementById('chapters-wrapper').style.display = 'none';
+                document.getElementById('book-info').style.display = 'block';
+            }
+
+            // Восстанавливаем позицию прокрутки после рендера
+            setTimeout(() => {
+                let savedScroll = parseInt(localStorage.getItem('scrollPos')) || 0;
+                window.scrollTo({ top: savedScroll, behavior: 'instant' });
+            }, 50);
         });
 
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        window.addEventListener('scroll', () => {
+            let winScroll = window.scrollY;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
+            let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            
             document.getElementById("progress-bar").style.width = scrolled + "%";
-
+            
             let topBtn = document.getElementById("back-to-top");
-            if (winScroll > 300) {
-                topBtn.style.display = "block";
-            } else {
-                topBtn.style.display = "none";
-            }
-        };
+            topBtn.style.display = winScroll > 300 ? "block" : "none";
+
+            // Сохраняем позицию скролла
+            localStorage.setItem('scrollPos', winScroll);
+        });
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -513,6 +482,7 @@
 
         function setFontFamily(fontFamily) {
             document.getElementById('reader').style.fontFamily = fontFamily;
+            localStorage.setItem('fontFamily', fontFamily); // Сохраняем семейство шрифта
         }
 
         function toggleTheme() {
@@ -524,12 +494,16 @@
         function openChapter(chapterId) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
+            localStorage.setItem('currentView', 'reading'); // Сохраняем статус чтения
+            localStorage.setItem('scrollPos', 0);
             scrollToTop();
         }
 
         function showBookInfo() {
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
+            localStorage.setItem('currentView', 'info'); // Сохраняем статус меню
+            localStorage.setItem('scrollPos', 0);
             scrollToTop();
         }
     </script>
