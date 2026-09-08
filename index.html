@@ -10,540 +10,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Отключаем стандартную синюю подсветку при тапе */
-        * {
-            -webkit-tap-highlight-color: transparent !important;
-            outline: none !important;
-        }
-
-        /* Настройка красивого выделения текста вместо синего браузерного */
-        ::selection {
-            background-color: var(--highlight-bg) !important;
-            color: var(--highlight-color) !important;
-        }
-        ::-moz-selection {
-            background-color: var(--highlight-bg) !important;
-            color: var(--highlight-color) !important;
-        }
-
-        :root {
-            /* 1. Темная фиолетовая тема */
-            --bg-color: #0d0b14;
-            --card-bg: #130f1e;
-            --btn-bg: #1c152c;
-            --btn-active: #be95ff;
-            --text-color: #e2dfed;
-            --accent-color: #be95ff;
-            --subtext-color: #9f86c0;
-            --border-color: #2a1f3d;
-            --content-width: 80%;
-            --line-height: 1.8;
-            --text-align: justify;
-            --header-height: 110px;
-
-            --highlight-bg: rgba(190, 149, 255, 0.4);
-            --highlight-color: #ffffff;
-            --highlight-border: #be95ff;
-        }
-
-        /* 2. Бумажная тема (Сепия) */
-        body.theme-sepia {
-            --bg-color: #f4ecd8;
-            --card-bg: #e8dfc8;
-            --btn-bg: #ded3b8;
-            --btn-active: #8c5a2b;
-            --text-color: #433422;
-            --accent-color: #8c5a2b;
-            --subtext-color: #6e5438;
-            --border-color: #c8bc9e;
-
-            --highlight-bg: rgba(140, 90, 43, 0.3);
-            --highlight-color: #2c1d0e;
-            --highlight-border: #8c5a2b;
-        }
-
-        /* 3. Светлая тема */
-        body.theme-light {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --btn-bg: #f1f3f5;
-            --btn-active: #6741d9;
-            --text-color: #212529;
-            --accent-color: #6741d9;
-            --subtext-color: #495057;
-            --border-color: #dee2e6;
-
-            --highlight-bg: rgba(103, 65, 217, 0.25);
-            --highlight-color: #100038;
-            --highlight-border: #6741d9;
-        }
-
-        /* 4. OLED True Black */
-        body.theme-eco {
-            --bg-color: #000000;
-            --card-bg: #000000;
-            --btn-bg: #000000;
-            --btn-active: #333333;
-            --text-color: #888888;
-            --accent-color: #aaaaaa;
-            --subtext-color: #555555;
-            --border-color: #1a1a1a;
-
-            --highlight-bg: #333333;
-            --highlight-color: #ffffff;
-            --highlight-border: #555555;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            margin: 0;
-            padding: 0;
-            line-height: var(--line-height);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: var(--accent-color);
-            width: 0%;
-            z-index: 2001;
-            transition: width 0.1s linear;
-        }
-
-        .header-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 2000;
-            transform: translateY(0);
-            opacity: 1;
-            transition: transform 0.3s, opacity 0.3s;
-        }
-
-        header {
-            padding: 10px 12px 8px;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(10px);
-        }
-
-        body.theme-eco header {
-            box-shadow: none;
-        }
-
-        body.zen-mode .header-wrapper {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .header-container {
-            width: var(--content-width);
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .header-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-title-box {
-            text-align: center;
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .book-title {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .author-name {
-            margin: 0;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            opacity: 0.9;
-        }
-
-        .header-controls-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(127, 127, 127, 0.08);
-            padding: 3px 6px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        select, button {
-            background-color: var(--btn-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 5px 9px;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            cursor: pointer;
-            touch-action: manipulation;
-            white-space: nowrap;
-            user-select: none;
-            -webkit-user-select: none;
-            transition: all 0.2s;
-        }
-
-        select:active, button:active {
-            background-color: var(--btn-active) !important;
-            color: #ffffff !important;
-            border-color: var(--btn-active) !important;
-        }
-
-        .btn-home {
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        .btn-pair {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--btn-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .btn-pair button {
-            border: none;
-            border-radius: 0;
-            padding: 4px 7px;
-            background: transparent;
-        }
-
-        .btn-pair button:first-child {
-            border-right: 1px solid var(--border-color);
-        }
-
-        #font-select, #quick-ch-select {
-            max-width: 95px;
-        }
-
-        #bookmarks-select {
-            max-width: 50px;
-            padding: 5px 2px;
-            text-align: center;
-        }
-
-        .reader-container {
-            width: var(--content-width);
-            margin: 0 auto;
-            padding: calc(var(--header-height) + 15px) 0 30px;
-            font-size: 18px;
-            box-sizing: border-box;
-        }
-
-        body.zen-mode .reader-container {
-            padding-top: 20px;
-        }
-
-        .book-cover {
-            width: 150px;
-            aspect-ratio: 2 / 3;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .book-meta-card, .book-description, .table-of-contents {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .meta-badge-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .genre-badge {
-            background-color: var(--btn-bg);
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .age-badge {
-            background-color: rgba(255, 133, 161, 0.15);
-            color: #ff85a1;
-            border: 1px solid rgba(255, 133, 161, 0.4);
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .tag {
-            color: var(--subtext-color);
-            font-size: 0.75rem;
-            background: rgba(127, 127, 127, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .chapters-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .chapters-list li {
-            margin-bottom: 8px;
-        }
-
-        .chapters-list button {
-            width: 100%;
-            display: flex;
-            gap: 10px;
-            text-align: left;
-            background-color: var(--btn-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 0.95rem;
-        }
-
-        .ch-num {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        .chapter h2 {
-            font-size: 1.5em;
-            color: var(--accent-color);
-            margin: 0 0 20px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .chapter p {
-            margin-bottom: 0.8em;
-            text-indent: 1.5em;
-            text-align: var(--text-align);
-            hyphens: auto;
-            -webkit-hyphens: auto;
-        }
-
-        .chapter p:first-of-type {
-            text-indent: 0;
-        }
-
-        .chapter-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .floating-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 2000;
-        }
-
-        .floating-controls button {
-            background: var(--btn-bg);
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            font-size: 1rem;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        mark.search-highlight {
-            background-color: var(--highlight-bg) !important;
-            color: var(--highlight-color) !important;
-            border-bottom: 2px solid var(--highlight-border);
-            border-radius: 3px;
-            padding: 0 2px;
-        }
-
-        /* Улучшенная всплывающая кнопка цитат */
-        #quote-action-btn {
-            position: fixed;
+        /* ===== ВСЕ СТИЛИ (ТЕ ЖЕ) ===== */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent !important; outline: none !important; }
+        ::selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
+        ::-moz-selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
+        :root { --bg-color: #0d0b14; --card-bg: #130f1e; --btn-bg: #1c152c; --btn-active: #be95ff; --text-color: #e2dfed; --accent-color: #be95ff; --subtext-color: #9f86c0; --border-color: #2a1f3d; --content-width: 92%; --line-height: 1.8; --text-align: justify; --header-height: 110px; --highlight-bg: rgba(190, 149, 255, 0.4); --highlight-color: #ffffff; --highlight-border: #be95ff; }
+        body.theme-sepia { --bg-color: #f4ecd8; --card-bg: #e8dfc8; --btn-bg: #ded3b8; --btn-active: #8c5a2b; --text-color: #433422; --accent-color: #8c5a2b; --subtext-color: #6e5438; --border-color: #c8bc9e; --highlight-bg: rgba(140, 90, 43, 0.3); --highlight-color: #2c1d0e; --highlight-border: #8c5a2b; }
+        body.theme-light { --bg-color: #f8f9fa; --card-bg: #ffffff; --btn-bg: #f1f3f5; --btn-active: #6741d9; --text-color: #212529; --accent-color: #6741d9; --subtext-color: #495057; --border-color: #dee2e6; --highlight-bg: rgba(103, 65, 217, 0.25); --highlight-color: #100038; --highlight-border: #6741d9; }
+        body.theme-eco { --bg-color: #000000; --card-bg: #000000; --btn-bg: #000000; --btn-active: #333333; --text-color: #888888; --accent-color: #aaaaaa; --subtext-color: #555555; --border-color: #1a1a1a; --highlight-bg: #333333; --highlight-color: #ffffff; --highlight-border: #555555; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Cormorant Garamond', Georgia, serif; margin: 0; padding: 0; line-height: var(--line-height); transition: background-color 0.3s, color 0.3s; }
+        @media (max-width: 600px) { .header-container .header-top-row { flex-wrap: wrap; justify-content: center; } .header-controls-row { flex-direction: column; gap: 4px; } .control-group { flex-wrap: wrap; justify-content: center; } .btn-home, #theme-btn { font-size: 0.7rem; padding: 2px 6px; } .book-title { font-size: 0.75rem; } .floating-controls button { width: 32px; height: 32px; font-size: 0.8rem; } }
+        #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 2001; transition: width 0.1s linear; }
+        .header-wrapper { position: fixed; top: 0; left: 0; right: 0; z-index: 2000; transform: translateY(0); opacity: 1; transition: transform 0.3s, opacity 0.3s; }
+        header { padding: 8px 6px; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35); backdrop-filter: blur(10px); }
+        body.theme-eco header { box-shadow: none; }
+        body.zen-mode .header-wrapper { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .header-container { width: var(--content-width); max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
+        .header-top-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+        .header-title-box { text-align: center; flex-grow: 1; overflow: hidden; }
+        .book-title { margin: 0; font-size: 0.85rem; color: var(--text-color); letter-spacing: 0.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .author-name { margin: 0; font-size: 0.7rem; font-weight: 600; color: var(--accent-color); opacity: 0.9; }
+        .header-controls-row { display: flex; justify-content: center; align-items: center; gap: 4px; flex-wrap: wrap; }
+        .control-group { display: flex; align-items: center; gap: 3px; background: rgba(127, 127, 127, 0.08); padding: 2px 4px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 100%; }
+        select, button { background-color: var(--btn-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 4px 7px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; touch-action: manipulation; white-space: nowrap; user-select: none; -webkit-user-select: none; transition: all 0.2s; }
+        select:active, button:active { background-color: var(--btn-active) !important; color: #ffffff !important; border-color: var(--btn-active) !important; }
+        .btn-home { font-weight: 600; color: var(--accent-color); padding: 4px 8px; }
+        .btn-pair { display: inline-flex; align-items: center; background-color: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
+        .btn-pair button { border: none; border-radius: 0; padding: 3px 6px; background: transparent; }
+        .btn-pair button:first-child { border-right: 1px solid var(--border-color); }
+        #font-select { max-width: 80px; }
+        #width-select { max-width: 75px; }
+        #quick-ch-select { max-width: 75px; }
+        .btn-bookmarks { font-weight: 600; color: var(--accent-color); }
+        .reader-container { width: var(--content-width); max-width: 800px; margin: 0 auto; padding: calc(var(--header-height) + 15px) 0 30px; font-size: 18px; box-sizing: border-box; }
+        body.zen-mode .reader-container { padding-top: 20px; }
+        .book-cover { width: 140px; aspect-ratio: 2 / 3; object-fit: cover; display: block; margin: 0 auto 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .book-meta-card, .book-description, .table-of-contents { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+        .meta-badge-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .genre-badge { background-color: var(--btn-bg); color: var(--accent-color); border: 1px solid var(--border-color); padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; }
+        .age-badge { background-color: rgba(255, 133, 161, 0.15); color: #ff85a1; border: 1px solid rgba(255, 133, 161, 0.4); padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .tags-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+        .tag { color: var(--subtext-color); font-size: 0.75rem; background: rgba(127, 127, 127, 0.1); padding: 2px 6px; border-radius: 4px; }
+        .chapters-list { list-style: none; padding: 0; margin: 0; }
+        .chapters-list li { margin-bottom: 8px; }
+        .chapters-list button { width: 100%; display: flex; gap: 10px; text-align: left; background-color: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 12px; font-size: 0.95rem; }
+        .ch-num { color: var(--accent-color); font-weight: 600; }
+        .chapter h2 { font-size: 1.4em; color: var(--accent-color); margin: 0 0 20px; text-align: center; font-weight: 600; }
+        .chapter p { margin-bottom: 0.8em; text-indent: 1.5em; text-align: var(--text-align); hyphens: auto; -webkit-hyphens: auto; }
+        .chapter p:first-of-type { text-indent: 0; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+        .floating-controls { position: fixed; bottom: 20px; right: 12px; display: flex; flex-direction: column; gap: 8px; z-index: 2000; }
+        .floating-controls button { background: var(--btn-bg); color: var(--accent-color); border: 1px solid var(--border-color); border-radius: 50%; width: 38px; height: 38px; font-size: 1rem; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s ease, transform 0.3s ease; }
+        /* НОВОЕ: кнопка очистки скрыта по умолчанию */
+        #clear-highlights-btn {
             display: none;
-            z-index: 3000;
-            background: var(--card-bg);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            border-radius: 20px;
-            padding: 6px 14px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            cursor: pointer;
-            transition: transform 0.1s ease;
-        }
-
-        #quote-action-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Модалки */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 4000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 450px;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-        }
-
-        .modal-header {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        .modal-body {
-            padding: 15px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        .modal-footer {
-            padding: 10px 15px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .quote-item {
-            background: var(--btn-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-style: italic;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .quote-item button {
-            margin-top: 8px;
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            float: right;
-            background: transparent;
-            color: #ff85a1;
-            border-color: rgba(255,133,161,0.4);
-        }
-
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--card-bg);
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            z-index: 3000;
             opacity: 0;
-            transition: transform 0.3s, opacity 0.3s;
-            pointer-events: none;
+            transform: scale(0.8);
         }
-
-        #toast.show {
-            transform: translateX(-50%) translateY(0);
+        #clear-highlights-btn.visible {
+            display: flex;
             opacity: 1;
+            transform: scale(1);
         }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: var(--subtext-color);
-        }
+        mark.search-highlight { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; border-bottom: 2px solid var(--highlight-border); border-radius: 3px; padding: 0 2px; }
+        #quote-bottom-bar { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); z-index: 3000; background: var(--card-bg); border: 1px solid var(--accent-color); border-radius: 20px; padding: 4px 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.7); display: flex; align-items: center; gap: 6px; transition: bottom 0.3s ease; font-size: 0.8rem; }
+        #quote-bottom-bar.show { bottom: 20px; }
+        #quote-bottom-bar button { background: var(--btn-bg); color: var(--accent-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 4px 10px; font-weight: 600; font-size: 0.75rem; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.active { display: flex; }
+        .modal-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 500px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
+        .modal-header { padding: 12px 15px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--accent-color); }
+        .modal-body { padding: 15px; overflow-y: auto; flex-grow: 1; }
+        .modal-footer { padding: 10px 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px; }
+        .quote-item, .bookmark-item, .search-result-item { background: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin-bottom: 10px; position: relative; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .search-result-item .result-info { flex: 1; min-width: 0; }
+        .search-result-item .result-chapter { font-weight: 600; color: var(--accent-color); font-size: 0.85rem; }
+        .search-result-item .result-context { font-style: italic; color: var(--subtext-color); font-size: 0.9rem; word-break: break-word; }
+        .search-result-item .result-context mark { background-color: var(--highlight-bg); color: var(--highlight-color); border-bottom: 2px solid var(--highlight-border); border-radius: 3px; padding: 0 2px; font-style: normal; }
+        .quote-item .actions, .bookmark-item .actions, .search-result-item .actions { display: flex; gap: 6px; }
+        .quote-item button, .bookmark-item button, .search-result-item button { font-size: 0.7rem; padding: 2px 8px; background: transparent; border-color: var(--border-color); border-radius: 4px; }
+        .bookmark-item .goto-btn, .search-result-item .goto-btn { color: var(--accent-color); }
+        .bookmark-item .delete-btn { color: #ff85a1; border-color: rgba(255,133,161,0.4); }
+        .search-input-group { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .search-input-group input { flex: 1; background: var(--btn-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 10px; font-size: 0.95rem; font-family: inherit; min-width: 120px; }
+        .search-input-group input:focus { border-color: var(--accent-color); }
+        .search-input-group button { padding: 6px 14px; }
+        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--card-bg); color: var(--accent-color); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; z-index: 3000; opacity: 0; transition: transform 0.3s, opacity 0.3s; pointer-events: none; }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; color: var(--subtext-color); }
     </style>
 </head>
 <body>
@@ -553,31 +107,24 @@
     <div class="header-wrapper" id="header-wrapper">
         <header id="header">
             <div class="header-container">
-                <!-- Верхняя строка шапки -->
                 <div class="header-top-row">
                     <button class="btn-home" onclick="showBookInfo()">🏛 Инфо</button>
-                    
                     <div class="header-title-box">
                         <h1 class="book-title">ЦВЕТ НОЧИ: ЛЕГЕНДА АМЕТИСТА</h1>
                         <p class="author-name">Мира Вердель • Том 1</p>
                     </div>
-
                     <button onclick="cycleTheme()" id="theme-btn" title="Сменить тему">🌙</button>
                 </div>
-
-                <!-- Нижная строка с аккуратно сгруппированными инструментами -->
                 <div class="header-controls-row">
                     <div class="control-group">
-                        <button onclick="triggerSearchPrompt()" title="Поиск по тексту">🔍</button>
-                        <button onclick="openQuotesModal()" title="Сохранённые цитаты">💬</button>
+                        <button onclick="openSearchModal()" title="Поиск">🔍</button>
+                        <button onclick="openQuotesModal()" title="Цитаты">💬</button>
+                        <button onclick="openBookmarksModal()" class="btn-bookmarks" title="Закладки">🔖</button>
                         <select id="quick-ch-select" onchange="openChapter(this.value)">
-                            <option value="" disabled selected>Главы...</option>
+                            <option value="" disabled selected>Глава...</option>
                             <option value="ch1">Глава 1</option>
                         </select>
-                        <select id="bookmarks-select" onchange="handleBookmarkAction(this.value)" title="Закладки">
-                        </select>
                     </div>
-
                     <div class="control-group">
                         <select id="font-select" onchange="setFontFamily(this.value)">
                             <option value="'Cormorant Garamond', serif">Garamond</option>
@@ -592,7 +139,6 @@
                         </select>
                         <button onclick="toggleTextAlign()" id="align-btn" title="Выравнивание">≡</button>
                     </div>
-
                     <div class="control-group">
                         <div class="btn-pair" title="Интервал">
                             <button onclick="changeLineHeight(-0.1)">↕-</button>
@@ -609,10 +155,8 @@
     </div>
 
     <main class="reader-container" id="reader">
-
         <section id="book-info">
             <img src="https://i.ibb.co/CLpVBJr/229-20260907183012.jpg" alt="Обложка Цвет Ночи" class="book-cover">
-
             <div class="book-meta-card">
                 <div class="meta-badge-row">
                     <span class="genre-badge">Тёмное фэнтези</span>
@@ -625,21 +169,14 @@
                     <span class="tag">#серая_мораль</span>
                 </div>
             </div>
-
             <div class="book-description">
                 <h3 style="color: var(--accent-color); margin-top: 0;">О книге</h3>
                 <p>История о выживании в суровом мире, где каждый шаг может стать последним, а цена ошибки слишком высока.</p>
             </div>
-
             <div class="table-of-contents">
                 <h3 style="color: var(--accent-color); margin-top: 0;">Оглавление</h3>
                 <ul class="chapters-list">
-                    <li>
-                        <button onclick="openChapter('ch1')">
-                            <span class="ch-num">Глава 1.</span>
-                            <span>Горячие пирожки и четыре крыла</span>
-                        </button>
-                    </li>
+                    <li><button onclick="openChapter('ch1')"><span class="ch-num">Глава 1.</span><span>Горячие пирожки и четыре крыла</span></button></li>
                 </ul>
             </div>
         </section>
@@ -680,16 +217,22 @@
         </div>
     </main>
 
+    <!-- ПЛАВАЮЩИЕ КНОПКИ -->
     <div class="floating-controls">
         <button onclick="toggleZenMode()" title="Скрыть/Показать панель">👁</button>
         <button onclick="cycleAutoScroll()" id="autoscroll-btn" title="Автоскролл">▶</button>
         <button onclick="saveCurrentBookmark()" title="Сохранить закладку">🔖</button>
+        <!-- НОВОЕ: кнопка очистки выделений (скрыта по умолчанию) -->
+        <button onclick="clearHighlights()" id="clear-highlights-btn" title="Снять выделение">❌</button>
         <button onclick="scrollToTop()" title="Наверх">↑</button>
         <button onclick="scrollToBottom()" title="Вниз">↓</button>
     </div>
 
-    <!-- Кнопка сохранения цитаты (появляется НАД выделением) -->
-    <button id="quote-action-btn" onclick="saveSelectedQuote()">📌 Сохранить цитату</button>
+    <!-- Компактная плашка цитат -->
+    <div id="quote-bottom-bar">
+        <span>💬</span>
+        <button onclick="saveSelectedQuote()">Сохранить</button>
+    </div>
 
     <!-- Модалка цитат -->
     <div class="modal-overlay" id="quotes-modal">
@@ -706,16 +249,54 @@
         </div>
     </div>
 
-    <div id="toast">🔖 Закладка сохранена!</div>
+    <!-- Модалка закладок -->
+    <div class="modal-overlay" id="bookmarks-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>🔖 Закладки</span>
+                <button onclick="closeBookmarksModal()">✕</button>
+            </div>
+            <div class="modal-body" id="bookmarks-container"></div>
+            <div class="modal-footer">
+                <button onclick="clearAllBookmarks()" style="color: #ff85a1; border-color: rgba(255,133,161,0.4);">Очистить все</button>
+                <button onclick="closeBookmarksModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка поиска -->
+    <div class="modal-overlay" id="search-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>🔍 Поиск по книге</span>
+                <button onclick="closeSearchModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="search-input-group">
+                    <input type="text" id="search-input" placeholder="Введите слово или фразу..." onkeydown="if(event.key==='Enter') performSearch()">
+                    <button onclick="performSearch()">Найти</button>
+                </div>
+                <div id="search-results-container">
+                    <p style="text-align: center; color: var(--subtext-color);">Введите слово и нажмите «Найти»</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSearchModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
 
     <footer>
         <p>© 2026 Мира Вердель • Все права защищены</p>
     </footer>
 
     <script>
+        // ========== Конфигурация ==========
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
-        let themes = ['dark', 'sepia', 'light', 'eco'];
-        let themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️', 'eco': '🔋' };
+        const themes = ['dark', 'sepia', 'light', 'eco'];
+        const themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️', 'eco': '🔋' };
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
         let currentWidthKey = localStorage.getItem('contentWidthKey') || 'medium';
@@ -729,24 +310,18 @@
         const speedLabels = { 0: '▶', 1: '1x', 2: '2x', 3: '3x' };
 
         const chapterTitles = { 'ch1': 'Глава 1' };
+        const widthMap = { 'narrow': '80%', 'medium': '92%', 'wide': '98%' };
 
-        const widthMap = {
-            'narrow': window.innerWidth < 600 ? '85%' : '55%',
-            'medium': window.innerWidth < 600 ? '92%' : '75%',
-            'wide': window.innerWidth < 600 ? '98%' : '92%'
-        };
-
+        // ========== Инициализация ==========
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('font-select').value = currentFontFamily;
             document.getElementById('width-select').value = currentWidthKey;
-            
             setFontFamily(currentFontFamily);
             applyFontSize(currentFontSize);
             applyTheme(currentTheme);
             setWidth(currentWidthKey);
             setTextAlign(currentTextAlign);
             setLineHeight(currentLineHeight);
-            loadBookmarksUI();
             updateHeaderHeight();
 
             if (currentView === 'reading') {
@@ -754,7 +329,7 @@
             }
 
             setTimeout(() => {
-                let savedScroll = parseInt(localStorage.getItem('scrollPos')) || 0;
+                const savedScroll = parseInt(localStorage.getItem('scrollPos')) || 0;
                 window.scrollTo({ top: savedScroll, behavior: 'instant' });
             }, 50);
         });
@@ -762,43 +337,21 @@
         window.addEventListener('resize', updateHeaderHeight);
 
         function updateHeaderHeight() {
-            let h = document.getElementById('header-wrapper').offsetHeight;
+            const h = document.getElementById('header-wrapper').offsetHeight;
             document.documentElement.style.setProperty('--header-height', h + 'px');
         }
 
         window.addEventListener('scroll', () => {
-            let winScroll = window.scrollY;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-            
+            const winScroll = window.scrollY;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
             document.getElementById("progress-bar").style.width = scrolled + "%";
             localStorage.setItem('scrollPos', winScroll);
         });
 
-        /* Аккуратное отображение кнопки цитаты НАД системным меню */
-        document.addEventListener('selectionchange', () => {
-            const selection = window.getSelection();
-            const text = selection.toString().trim();
-            const btn = document.getElementById('quote-action-btn');
-
-            if (text.length > 3 && currentView === 'reading') {
-                const range = selection.getRangeAt(0);
-                const rect = range.getBoundingClientRect();
-                
-                // Ставим кнопку строго сверху над выделением, чтобы не перекрывать системное меню "Копировать"
-                let topPos = rect.top - 48;
-                if (topPos < 10) topPos = rect.bottom + 10; // Если верх ушёл за экран, ставим вниз
-
-                btn.style.top = topPos + 'px';
-                btn.style.left = Math.min(window.innerWidth - 160, Math.max(10, rect.left + (rect.width / 2) - 65)) + 'px';
-                btn.style.display = 'block';
-            } else {
-                btn.style.display = 'none';
-            }
-        });
-
+        // ========== Утилиты ==========
         function showToast(text) {
-            let toast = document.getElementById('toast');
+            const toast = document.getElementById('toast');
             toast.innerText = text;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2000);
@@ -812,6 +365,29 @@
             window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         }
 
+        // ========== УПРАВЛЕНИЕ КНОПКОЙ ОЧИСТКИ ==========
+        function showClearButton() {
+            const btn = document.getElementById('clear-highlights-btn');
+            btn.classList.add('visible');
+        }
+
+        function hideClearButton() {
+            const btn = document.getElementById('clear-highlights-btn');
+            btn.classList.remove('visible');
+        }
+
+        // ========== ОЧИСТКА ВЫДЕЛЕНИЙ ==========
+        function clearHighlights() {
+            document.querySelectorAll('mark.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.innerText), el);
+                parent.normalize();
+            });
+            hideClearButton();
+            showToast('Выделения сняты');
+        }
+
+        // ========== Настройки отображения ==========
         function changeFontSize(delta) {
             currentFontSize = Math.max(14, Math.min(28, currentFontSize + delta));
             applyFontSize(currentFontSize);
@@ -829,7 +405,7 @@
         }
 
         function setWidth(key) {
-            let val = widthMap[key] || widthMap['medium'];
+            const val = widthMap[key] || widthMap['medium'];
             document.documentElement.style.setProperty('--content-width', val);
             localStorage.setItem('contentWidthKey', key);
             setTimeout(updateHeaderHeight, 100);
@@ -857,6 +433,7 @@
             document.documentElement.style.setProperty('--line-height', lh);
         }
 
+        // ========== Темы ==========
         function cycleTheme() {
             let currentIndex = themes.indexOf(currentTheme);
             currentTheme = themes[(currentIndex + 1) % themes.length];
@@ -870,49 +447,145 @@
             document.getElementById('theme-btn').innerText = themeIcons[theme];
         }
 
+        // ========== Zen-режим ==========
         function toggleZenMode() {
             document.body.classList.toggle('zen-mode');
         }
 
-        function triggerSearchPrompt() {
-            const term = prompt("Введите слово для поиска:");
-            if (term !== null) searchText(term);
+        // ========== Поиск (модалка) ==========
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.add('active');
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-results-container').innerHTML = '<p style="text-align: center; color: var(--subtext-color);">Введите слово и нажмите «Найти»</p>';
+            // Скрываем кнопку очистки при открытии поиска
+            hideClearButton();
+            setTimeout(() => document.getElementById('search-input').focus(), 100);
         }
 
-        function searchText(term) {
-            const wrapper = document.getElementById('chapters-wrapper');
-            wrapper.querySelectorAll('mark.search-highlight').forEach(el => {
-                const parent = el.parentNode;
-                parent.replaceChild(document.createTextNode(el.innerText), el);
-                parent.normalize();
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.remove('active');
+            // Если нет подсветок, скрываем кнопку
+            if (document.querySelectorAll('mark.search-highlight').length === 0) {
+                hideClearButton();
+            }
+        }
+
+        function performSearch() {
+            const input = document.getElementById('search-input');
+            const query = input.value.trim();
+            if (!query) {
+                showToast('Введите слово для поиска');
+                return;
+            }
+
+            // Очищаем старые подсветки и скрываем кнопку
+            clearHighlights();
+
+            const chapters = document.querySelectorAll('article.chapter');
+            let results = [];
+
+            chapters.forEach(chapter => {
+                const chapterId = chapter.id;
+                const chapterTitle = chapterTitles[chapterId] || chapterId;
+                const paragraphs = chapter.querySelectorAll('p');
+                paragraphs.forEach(p => {
+                    const text = p.innerText;
+                    const lowerText = text.toLowerCase();
+                    const lowerQuery = query.toLowerCase();
+                    let index = lowerText.indexOf(lowerQuery);
+                    if (index !== -1) {
+                        const matches = [];
+                        let tempIndex = lowerText.indexOf(lowerQuery);
+                        while (tempIndex !== -1) {
+                            matches.push(tempIndex);
+                            tempIndex = lowerText.indexOf(lowerQuery, tempIndex + 1);
+                        }
+                        matches.forEach(pos => {
+                            const start = Math.max(0, pos - 50);
+                            const end = Math.min(text.length, pos + query.length + 50);
+                            let context = text.substring(start, end);
+                            const relPos = pos - start;
+                            const before = context.substring(0, relPos);
+                            const matchText = context.substring(relPos, relPos + query.length);
+                            const after = context.substring(relPos + query.length);
+                            context = before + '<mark>' + matchText + '</mark>' + after;
+                            if (start > 0) context = '…' + context;
+                            if (end < text.length) context = context + '…';
+                            results.push({
+                                chapterId: chapterId,
+                                chapterTitle: chapterTitle,
+                                context: context,
+                                p: p,
+                                firstIndex: pos
+                            });
+                        });
+                    }
+                });
             });
 
-            if (!term || !term.trim()) return;
+            const container = document.getElementById('search-results-container');
+            if (results.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--subtext-color);">Ничего не найдено</p>';
+                hideClearButton();
+                return;
+            }
 
-            const cleanTerm = term.trim();
-            const regex = new RegExp(`(${cleanTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            container.innerHTML = results.map((r, idx) => `
+                <div class="search-result-item" data-index="${idx}">
+                    <div class="result-info">
+                        <div class="result-chapter">${r.chapterTitle}</div>
+                        <div class="result-context">${r.context}</div>
+                    </div>
+                    <div class="actions">
+                        <button class="goto-btn" onclick="goToSearchResult(${idx})">Перейти</button>
+                    </div>
+                </div>
+            `).join('');
 
-            const paragraphs = wrapper.querySelectorAll('p, h2');
-            let count = 0;
+            window._searchResults = results;
+            
+            // Появляем кнопку очистки, так как есть результаты поиска
+            showClearButton();
+            showToast(`Найдено ${results.length} совпадений`);
+        }
+
+        function goToSearchResult(idx) {
+            const results = window._searchResults;
+            if (!results || idx >= results.length) return;
+            const r = results[idx];
+            
+            openChapter(r.chapterId, false);
+            
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) return;
+            
+            // Очищаем старые подсветки
+            clearHighlights();
+
+            const chapter = document.getElementById(r.chapterId);
+            if (!chapter) return;
+            const paragraphs = chapter.querySelectorAll('p');
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
             let firstMatch = null;
-
             paragraphs.forEach(p => {
                 if (regex.test(p.innerHTML)) {
                     p.innerHTML = p.innerHTML.replace(regex, '<mark class="search-highlight">$1</mark>');
                     if (!firstMatch) firstMatch = p.querySelector('mark.search-highlight');
-                    count++;
                 }
             });
 
+            // Показываем кнопку очистки, так как есть подсветки
+            showClearButton();
+
             if (firstMatch) {
-                if (currentView !== 'reading') openChapter('ch1', false);
                 firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                showToast(`Найдено совпадений: ${count}`);
-            } else {
-                showToast('Ничего не найдено');
             }
+
+            closeSearchModal();
+            showToast(`Переход к: "${query}" в ${r.chapterTitle}`);
         }
 
+        // ========== Автоскролл ==========
         function cycleAutoScroll() {
             autoScrollSpeed = (autoScrollSpeed + 1) % 4;
             document.getElementById('autoscroll-btn').innerText = speedLabels[autoScrollSpeed];
@@ -937,6 +610,7 @@
             }
         }
 
+        // ========== Цитаты ==========
         function saveSelectedQuote() {
             const selection = window.getSelection();
             const text = selection ? selection.toString().trim() : '';
@@ -948,12 +622,24 @@
                 localStorage.setItem('saved_quotes', JSON.stringify(quotes));
                 
                 selection.removeAllRanges();
-                document.getElementById('quote-action-btn').style.display = 'none';
+                document.getElementById('quote-bottom-bar').classList.remove('show');
                 showToast('💬 Цитата сохранена!');
             } catch (e) {
                 console.error("Ошибка цитаты:", e);
             }
         }
+
+        document.addEventListener('selectionchange', () => {
+            const selection = window.getSelection();
+            const text = selection ? selection.toString().trim() : '';
+            const bar = document.getElementById('quote-bottom-bar');
+
+            if (text.length > 3 && currentView === 'reading') {
+                bar.classList.add('show');
+            } else {
+                bar.classList.remove('show');
+            }
+        });
 
         function openQuotesModal() {
             renderQuotesList();
@@ -976,10 +662,9 @@
             container.innerHTML = quotes.map(q => `
                 <div class="quote-item">
                     «${q.text}»
-                    <div>
-                        <button onclick="deleteQuote(${q.id})">Удалить</button>
+                    <div class="actions">
+                        <button class="delete-btn" onclick="deleteQuote(${q.id})">Удалить</button>
                     </div>
-                    <div style="clear: both;"></div>
                 </div>
             `).join('');
         }
@@ -1000,6 +685,93 @@
             }
         }
 
+        // ========== Закладки ==========
+        function openBookmarksModal() {
+            renderBookmarksList();
+            document.getElementById('bookmarks-modal').classList.add('active');
+        }
+
+        function closeBookmarksModal() {
+            document.getElementById('bookmarks-modal').classList.remove('active');
+        }
+
+        function renderBookmarksList() {
+            const container = document.getElementById('bookmarks-container');
+            const bookmarks = JSON.parse(localStorage.getItem('userBookmarks') || '[]');
+
+            if (bookmarks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--subtext-color);">Закладок пока нет.<br><small>Нажмите 🔖 на панели или в плавающих кнопках, чтобы добавить.</small></p>';
+                return;
+            }
+
+            container.innerHTML = bookmarks.map(bm => `
+                <div class="bookmark-item">
+                    <span>${bm.label} (${bm.chapter})</span>
+                    <div class="actions">
+                        <button class="goto-btn" onclick="goToBookmark(${bm.id})">Перейти</button>
+                        <button class="delete-btn" onclick="deleteBookmark(${bm.id})">Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function goToBookmark(id) {
+            const bookmarks = JSON.parse(localStorage.getItem('userBookmarks') || '[]');
+            const bm = bookmarks.find(b => b.id === id);
+            if (bm) {
+                openChapter(bm.chapter, false);
+                setTimeout(() => {
+                    window.scrollTo({ top: bm.scrollPos, behavior: 'smooth' });
+                }, 100);
+                closeBookmarksModal();
+                showToast(`Переход к: ${bm.label}`);
+            }
+        }
+
+        function deleteBookmark(id) {
+            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks') || '[]');
+            bookmarks = bookmarks.filter(b => b.id !== id);
+            localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
+            renderBookmarksList();
+            showToast('Закладка удалена');
+        }
+
+        function clearAllBookmarks() {
+            if (confirm("Удалить все закладки?")) {
+                localStorage.removeItem('userBookmarks');
+                renderBookmarksList();
+                showToast('Все закладки очищены');
+            }
+        }
+
+        function saveCurrentBookmark() {
+            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
+            const scroll = Math.round(window.scrollY);
+            const ch = localStorage.getItem('activeChapter') || 'ch1';
+            const title = chapterTitles[ch] || 'Глава';
+            
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = totalHeight > 0 ? Math.round((scroll / totalHeight) * 100) : 0;
+
+            const newBookmark = {
+                id: Date.now(),
+                chapter: ch,
+                scrollPos: scroll,
+                label: `${title} (${percent}%)`
+            };
+
+            const similar = bookmarks.some(b => b.chapter === ch && Math.abs(b.scrollPos - scroll) < 100);
+            if (!similar) {
+                bookmarks.unshift(newBookmark);
+                if (bookmarks.length > 10) bookmarks.pop();
+                localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
+                showToast('🔖 Закладка сохранена!');
+            } else {
+                showToast('Закладка уже существует для этой позиции');
+            }
+        }
+
+        // ========== Навигация по главам ==========
         function openChapter(chapterId, resetScroll = true) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
@@ -1023,96 +795,10 @@
             localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
-        }
-
-        function saveCurrentBookmark() {
-            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
-            let scroll = Math.round(window.scrollY);
-            let ch = localStorage.getItem('activeChapter') || 'ch1';
-            let title = chapterTitles[ch] || 'Глава';
             
-            let totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-            let percent = totalHeight > 0 ? Math.round((scroll / totalHeight) * 100) : 0;
-
-            let newBookmark = {
-                id: Date.now(),
-                chapter: ch,
-                scrollPos: scroll,
-                label: `${title} (${percent}%)`
-            };
-
-            bookmarks.unshift(newBookmark);
-            if (bookmarks.length > 5) bookmarks.pop();
-            
-            localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
-            loadBookmarksUI();
-            showToast('🔖 Закладка сохранена!');
-        }
-
-        function loadBookmarksUI() {
-            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
-            let select = document.getElementById('bookmarks-select');
-            
-            select.innerHTML = '<option value="" disabled selected>🔖</option>';
-            
-            if (bookmarks.length > 0) {
-                bookmarks.forEach(bm => {
-                    let opt = document.createElement('option');
-                    opt.value = JSON.stringify(bm);
-                    opt.innerText = bm.label;
-                    select.appendChild(opt);
-                });
-
-                let deleteOpt = document.createElement('option');
-                deleteOpt.value = "DELETE_MODE";
-                deleteOpt.innerText = "❌ Удалить...";
-                select.appendChild(deleteOpt);
-            } else {
-                let opt = document.createElement('option');
-                opt.disabled = true;
-                opt.innerText = "Пусто";
-                select.appendChild(opt);
-            }
-        }
-
-        function handleBookmarkAction(val) {
-            if (!val) return;
-
-            if (val === "DELETE_MODE") {
-                deleteBookmarkPrompt();
-                document.getElementById('bookmarks-select').value = "";
-                return;
-            }
-
-            let bm = JSON.parse(val);
-            openChapter(bm.chapter, false);
-            setTimeout(() => {
-                window.scrollTo({ top: bm.scrollPos, behavior: 'smooth' });
-            }, 100);
-            document.getElementById('bookmarks-select').value = "";
-        }
-
-        function deleteBookmarkPrompt() {
-            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
-            if (bookmarks.length === 0) return;
-
-            let listStr = bookmarks.map((bm, index) => `${index + 1}. ${bm.label}`).join('\n');
-            let choice = prompt(`Введи номер закладки для удаления (1-${bookmarks.length}) или '0' для очистки всех:\n\n${listStr}`);
-
-            if (choice === '0') {
-                localStorage.removeItem('userBookmarks');
-                loadBookmarksUI();
-                showToast('Все закладки удалены');
-            } else if (choice && !isNaN(choice)) {
-                let idx = parseInt(choice) - 1;
-                if (idx >= 0 && idx < bookmarks.length) {
-                    bookmarks.splice(idx, 1);
-                    localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
-                    loadBookmarksUI();
-                    showToast('Закладка удалена');
-                }
-            }
+            // При переключении на инфо скрываем кнопку очистки
+            hideClearButton();
         }
     </script>
 </body>
-</html>
+                                </html>
