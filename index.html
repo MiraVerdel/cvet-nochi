@@ -3,42 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цвет ночи • Мира Вердель</title>
+    <title>Цвет ночи: легенда аметиста • Мира Вердель</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* Отключаем стандартную синюю подсветку при тапе */
+        * {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
+
+        /* Настройка красивого выделения текста вместо синего браузерного */
+        ::selection {
+            background-color: var(--highlight-bg) !important;
+            color: var(--highlight-color) !important;
+        }
+        ::-moz-selection {
+            background-color: var(--highlight-bg) !important;
+            color: var(--highlight-color) !important;
+        }
+
         :root {
+            /* 1. Темная фиолетовая тема */
             --bg-color: #0d0b14;
             --card-bg: #130f1e;
             --btn-bg: #1c152c;
+            --btn-active: #be95ff;
             --text-color: #e2dfed;
             --accent-color: #be95ff;
             --subtext-color: #9f86c0;
             --border-color: #2a1f3d;
             --content-width: 80%;
+            --line-height: 1.8;
+            --text-align: justify;
+            --header-height: 110px;
+
+            --highlight-bg: rgba(190, 149, 255, 0.4);
+            --highlight-color: #ffffff;
+            --highlight-border: #be95ff;
         }
 
+        /* 2. Бумажная тема (Сепия) */
         body.theme-sepia {
             --bg-color: #f4ecd8;
             --card-bg: #e8dfc8;
             --btn-bg: #ded3b8;
+            --btn-active: #8c5a2b;
             --text-color: #433422;
             --accent-color: #8c5a2b;
             --subtext-color: #6e5438;
             --border-color: #c8bc9e;
+
+            --highlight-bg: rgba(140, 90, 43, 0.3);
+            --highlight-color: #2c1d0e;
+            --highlight-border: #8c5a2b;
         }
 
+        /* 3. Светлая тема */
         body.theme-light {
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --btn-bg: #f1f3f5;
+            --btn-active: #6741d9;
             --text-color: #212529;
             --accent-color: #6741d9;
             --subtext-color: #495057;
             --border-color: #dee2e6;
+
+            --highlight-bg: rgba(103, 65, 217, 0.25);
+            --highlight-color: #100038;
+            --highlight-border: #6741d9;
+        }
+
+        /* 4. OLED True Black */
+        body.theme-eco {
+            --bg-color: #000000;
+            --card-bg: #000000;
+            --btn-bg: #000000;
+            --btn-active: #333333;
+            --text-color: #888888;
+            --accent-color: #aaaaaa;
+            --subtext-color: #555555;
+            --border-color: #1a1a1a;
+
+            --highlight-bg: #333333;
+            --highlight-color: #ffffff;
+            --highlight-border: #555555;
         }
 
         body {
@@ -47,7 +100,7 @@
             font-family: 'Cormorant Garamond', Georgia, serif;
             margin: 0;
             padding: 0;
-            line-height: 1.8;
+            line-height: var(--line-height);
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -58,103 +111,173 @@
             height: 3px;
             background: var(--accent-color);
             width: 0%;
-            z-index: 1001;
-            transition: width 0.1s;
+            z-index: 2001;
+            transition: width 0.1s linear;
+        }
+
+        .header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2000;
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.3s, opacity 0.3s;
         }
 
         header {
-            text-align: center;
-            padding: 8px 10px;
+            padding: 10px 12px 8px;
             border-bottom: 1px solid var(--border-color);
             background-color: var(--card-bg);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(10px);
         }
 
-        body.zen-mode header {
+        body.theme-eco header {
+            box-shadow: none;
+        }
+
+        body.zen-mode .header-wrapper {
             transform: translateY(-100%);
             opacity: 0;
             pointer-events: none;
         }
 
-        .top-bar {
+        .header-container {
+            width: var(--content-width);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .header-top-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: var(--content-width);
-            margin: 0 auto;
-            gap: 8px;
-            transition: width 0.2s ease;
+            gap: 10px;
         }
 
-        .controls-group {
+        .header-title-box {
+            text-align: center;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .book-title {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .author-name {
+            margin: 0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            opacity: 0.9;
+        }
+
+        .header-controls-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
             display: flex;
             align-items: center;
             gap: 4px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
+            background: rgba(127, 127, 127, 0.08);
+            padding: 3px 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
         select, button {
             background-color: var(--btn-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 6px 10px;
+            padding: 5px 9px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             cursor: pointer;
-            outline: none;
             touch-action: manipulation;
+            white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: all 0.2s;
+        }
+
+        select:active, button:active {
+            background-color: var(--btn-active) !important;
+            color: #ffffff !important;
+            border-color: var(--btn-active) !important;
+        }
+
+        .btn-home {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .btn-pair {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .btn-pair button {
+            border: none;
+            border-radius: 0;
+            padding: 4px 7px;
+            background: transparent;
+        }
+
+        .btn-pair button:first-child {
+            border-right: 1px solid var(--border-color);
         }
 
         #font-select, #quick-ch-select {
-            max-width: 120px;
+            max-width: 95px;
         }
 
-        .book-title {
-            margin: 4px 0 0;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        .author-name {
-            margin: 0;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-color);
+        #bookmarks-select {
+            max-width: 50px;
+            padding: 5px 2px;
+            text-align: center;
         }
 
         .reader-container {
             width: var(--content-width);
             margin: 0 auto;
-            padding: 20px 0;
+            padding: calc(var(--header-height) + 15px) 0 30px;
             font-size: 18px;
-            transition: width 0.2s ease;
             box-sizing: border-box;
         }
 
-        .reading-time {
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--subtext-color);
-            margin-bottom: 15px;
-            font-style: italic;
+        body.zen-mode .reader-container {
+            padding-top: 20px;
         }
 
         .book-cover {
-            width: 160px;
+            width: 150px;
             aspect-ratio: 2 / 3;
             object-fit: cover;
             display: block;
             margin: 0 auto 15px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .book-meta-card, .book-description, .table-of-contents {
@@ -236,9 +359,9 @@
         }
 
         .chapter h2 {
-            font-size: 1.4em;
+            font-size: 1.5em;
             color: var(--accent-color);
-            margin: 10px 0 5px;
+            margin: 0 0 20px;
             text-align: center;
             font-weight: 600;
         }
@@ -246,7 +369,7 @@
         .chapter p {
             margin-bottom: 0.8em;
             text-indent: 1.5em;
-            text-align: justify;
+            text-align: var(--text-align);
             hyphens: auto;
             -webkit-hyphens: auto;
         }
@@ -263,28 +386,156 @@
             border-top: 1px solid var(--border-color);
         }
 
-        #back-to-top, #zen-toggle {
+        .floating-controls {
             position: fixed;
             bottom: 20px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2000;
+        }
+
+        .floating-controls button {
             background: var(--btn-bg);
             color: var(--accent-color);
             border: 1px solid var(--border-color);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 1.2rem;
-            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            font-size: 1rem;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
         }
 
-        #back-to-top {
-            right: 20px;
+        mark.search-highlight {
+            background-color: var(--highlight-bg) !important;
+            color: var(--highlight-color) !important;
+            border-bottom: 2px solid var(--highlight-border);
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        /* Улучшенная всплывающая кнопка цитат */
+        #quote-action-btn {
+            position: fixed;
             display: none;
+            z-index: 3000;
+            background: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transition: transform 0.1s ease;
         }
 
-        #zen-toggle {
-            right: 70px;
+        #quote-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Модалки */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+
+        .modal-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .modal-body {
+            padding: 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .modal-footer {
+            padding: 10px 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .quote-item {
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-style: italic;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .quote-item button {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            float: right;
+            background: transparent;
+            color: #ff85a1;
+            border-color: rgba(255,133,161,0.4);
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 3000;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         footer {
@@ -299,33 +550,63 @@
 
     <div id="progress-bar"></div>
 
-    <header id="header">
-        <div class="top-bar">
-            <button onclick="showBookInfo()">🏛 К книге</button>
-            <div class="controls-group">
-                <select id="quick-ch-select" onchange="openChapter(this.value)">
-                    <option value="" disabled selected>Главы...</option>
-                    <option value="ch1">Глава 1</option>
-                </select>
-                <select id="font-select" onchange="setFontFamily(this.value)">
-                    <option value="'Cormorant Garamond', serif">Garamond</option>
-                    <option value="Georgia, serif">Georgia</option>
-                    <option value="'Lora', serif">Lora</option>
-                    <option value="'Merriweather', serif">Merriweather</option>
-                </select>
-                <select id="width-select" onchange="setWidth(this.value)" title="Ширина текста">
-                    <option value="narrow">Узкая</option>
-                    <option value="medium" selected>Средняя</option>
-                    <option value="wide">Широкая</option>
-                </select>
-                <button onclick="cycleTheme()" id="theme-btn" title="Сменить тему">🌙</button>
-                <button onclick="changeFontSize(-1)">A-</button>
-                <button onclick="changeFontSize(1)">A+</button>
+    <div class="header-wrapper" id="header-wrapper">
+        <header id="header">
+            <div class="header-container">
+                <!-- Верхняя строка шапки -->
+                <div class="header-top-row">
+                    <button class="btn-home" onclick="showBookInfo()">🏛 Инфо</button>
+                    
+                    <div class="header-title-box">
+                        <h1 class="book-title">ЦВЕТ НОЧИ: ЛЕГЕНДА АМЕТИСТА</h1>
+                        <p class="author-name">Мира Вердель • Том 1</p>
+                    </div>
+
+                    <button onclick="cycleTheme()" id="theme-btn" title="Сменить тему">🌙</button>
+                </div>
+
+                <!-- Нижная строка с аккуратно сгруппированными инструментами -->
+                <div class="header-controls-row">
+                    <div class="control-group">
+                        <button onclick="triggerSearchPrompt()" title="Поиск по тексту">🔍</button>
+                        <button onclick="openQuotesModal()" title="Сохранённые цитаты">💬</button>
+                        <select id="quick-ch-select" onchange="openChapter(this.value)">
+                            <option value="" disabled selected>Главы...</option>
+                            <option value="ch1">Глава 1</option>
+                        </select>
+                        <select id="bookmarks-select" onchange="handleBookmarkAction(this.value)" title="Закладки">
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <select id="font-select" onchange="setFontFamily(this.value)">
+                            <option value="'Cormorant Garamond', serif">Garamond</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Lora', serif">Lora</option>
+                            <option value="'Merriweather', serif">Merriweather</option>
+                        </select>
+                        <select id="width-select" onchange="setWidth(this.value)" title="Ширина">
+                            <option value="narrow">Узкая</option>
+                            <option value="medium" selected>Средняя</option>
+                            <option value="wide">Широкая</option>
+                        </select>
+                        <button onclick="toggleTextAlign()" id="align-btn" title="Выравнивание">≡</button>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="btn-pair" title="Интервал">
+                            <button onclick="changeLineHeight(-0.1)">↕-</button>
+                            <button onclick="changeLineHeight(0.1)">↕+</button>
+                        </div>
+                        <div class="btn-pair" title="Размер шрифта">
+                            <button onclick="changeFontSize(-1)">A-</button>
+                            <button onclick="changeFontSize(1)">A+</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <h1 class="book-title">ЦВЕТ НОЧИ</h1>
-        <p class="author-name">Мира Вердель • ТОМ 1</p>
-    </header>
+        </header>
+    </div>
 
     <main class="reader-container" id="reader">
 
@@ -366,29 +647,30 @@
         <div id="chapters-wrapper" style="display: none;">
             <article class="chapter" id="ch1">
                 <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
-                <div class="reading-time" id="ch1-time"></div>
-                <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
-                <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
-                <p>– Вот дерьмо...</p>
-                <p>Мой обед остался на столе. Его, похоже, придётся выкинуть, если Гаррик не съест мои пирожки с мясом... Что ж, на перерыве придётся лететь так быстро, чтобы успеть обратно. Полчаса на перерыв в такие моменты кажутся секундами.</p>
-                <p>Спустя два часа город начал оживать: шум, болтовня, недовольное бурчание. Солнце начало захватывать своими лучами остатки ночи. Я не любил раннее утро, мне нравилось сидеть в тени, но, к сожалению, вечерне-ночное дежурство досталось Гаррику. Впрочем, на двух работах я хоть и не живу как Лука, а явно получше Гаррика. Но его самомнения хватит на всю Воздушную столицу и пару лодочек. А таких воздушных здесь немало — казалось, их эго пахло по всему городу скисшим молоком.</p>
-                <p>Я не заметил, как прозвенел первый колокол. Быстро схватив сумку и фляжку, взлетел как можно быстрее в центральное кольцо.</p>
-                <p>Потоки воздуха были благосклонны ко мне, и за десять минут я приземлился у шатра огненных, где торговал один из моих работодателей. В отличие от Грэгора, дядюшка Рони был добрым, никогда не обманывал. Казалось, его улыбка с усами обнимает весь мир своей чистотой и доброжелательностью.</p>
-                <p>– Ох, Ю'шка, чего это ж тут делает наш защитник воздушных просторов в свой рабочий день? Неужто по мне соскучился-то? А-а-а, – длинно протянул тот, – опять забыл свой обед!</p>
-                <p>Хохотнул он, а я опустил глаза в пол.</p>
-                <p>– Ой-ой-ой не гоже ходить голодным на службе, тишина и спокойствие нашего города зависит от сытых стражников. Ты это тут, торопись давай, а то не успеешь.</p>
-                <p>Он протянул мне два завернутых пирожка с мясом, а я отдал два медных азара, которые отсчитал в кармане по пути.</p>
-                <p>– Давай, удачи тебе, Ю'ш!</p>
-                <p>– Да, спасибо, дядя Рони, – быстро сказал я и взлетел.</p>
-                <p>Как только мои сапоги коснулись каменного покрытия крыши, прозвенел колокол.</p>
-                <p>– Что ж, осталось четыре часа...</p>
-                <p>Развернув пирожки, я почувствовал от них тепло и вспомнил дядюшку Рони. Они грели мне душу, ведь не каждый чистокровка так относится к полукровке, особенно учитывая, что тот – огненный. Многие относятся к таким, как я, с пренебрежением. Тем более с моей внешностью. Меня судят постоянно: похож на снежного? Четыре крыла? Такого не должно быть! Разве могут водный и воздушный породить такое уродство? Тем более взглянуть друг на друга...</p>
-                <p>Извольте, с такой внешностью одни беды и угнетения. Ни у кого нет четырёх крыльев... Это изматывает... опустошает... изводит...</p>
-                <p>А к чему это я? Ах, да.</p>
-                <p>Дядя Рони знает меня ещё с тринадцати лет. Сначала я помогал бескорыстно, но тот сам решил: работаю – значит, надо платить. Мне нравилось, меня начали замечать, подбадривать. Он стал для меня тем самым дедушкой, которого у меня никогда не было.</p>
-                <p>Откусив первый кусок, я чуть не заплакал:</p>
-                <p>– Горячо...</p>
-                <p>Что ж, по меркам огненных это тёпленько, на троечку, но я воздушный — для нас это пожар во рту. Вот прохвост, никогда не упустит способа надо мной подшутить! От такого абсурда я засмеялся, ведь мне буквально навредил не враг, а обычный горячий пирожок...</p>
+                <div class="chapter-content">
+                    <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
+                    <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
+                    <p>– Вот дерьмо...</p>
+                    <p>Мой обед остался на столе. Его, похоже, придётся выкинуть, если Гаррик не съест мои пирожки с мясом... Что ж, на перерыве придётся лететь так быстро, чтобы успеть обратно. Полчаса на перерыв в такие моменты кажутся секундами.</p>
+                    <p>Спустя два часа город начал оживать: шум, болтовня, недовольное бурчание. Солнце начало захватывать своими лучами остатки ночи. Я не любил раннее утро, мне нравилось сидеть в тени, но, к сожалению, вечерне-ночное дежурство досталось Гаррику. Впрочем, на двух работах я хоть и не живу как Лука, а явно получше Гаррика. Но его самомнения хватит на всю Воздушную столицу и пару лодочек. А таких воздушных здесь немало — казалось, их эго пахло по всему городу скисшим молоком.</p>
+                    <p>Я не заметил, как прозвенел первый колокол. Быстро схватив сумку и фляжку, взлетел как можно быстрее в центральное кольцо.</p>
+                    <p>Потоки воздуха были благосклонны ко мне, и за десять минут я приземлился у шатра огненных, где торговал один из моих работодателей. В отличие от Грэгора, дядюшка Рони был добрым, никогда не обманывал. Казалось, его улыбка с усами обнимает весь мир своей чистотой и доброжелательностью.</p>
+                    <p>– Ох, Ю'шка, чего это ж тут делает наш защитник воздушных просторов в свой рабочий день? Неужто по мне соскучился-то? А-а-а, – длинно протянул тот, – опять забыл свой обед!</p>
+                    <p>Хохотнул он, а я опустил глаза в пол.</p>
+                    <p>– Ой-ой-ой не гоже ходить голодным на службе, тишина и спокойствие нашего города зависит от сытых стражников. Ты это тут, торопись давай, а то не успеешь.</p>
+                    <p>Он протянул мне два завернутых пирожка с мясом, а я отдал два медных азара, которые отсчитал в кармане по пути.</p>
+                    <p>– Давай, удачи тебе, Ю'ш!</p>
+                    <p>– Да, спасибо, дядя Рони, – быстро сказал я и взлетел.</p>
+                    <p>Как только мои сапоги коснулись каменного покрытия крыши, прозвенел колокол.</p>
+                    <p>– Что ж, осталось четыре часа...</p>
+                    <p>Развернув пирожки, я почувствовал от них тепло и вспомнил дядюшку Рони. Они грели мне душу, ведь не каждый чистокровка так относится к полукровке, особенно учитывая, что тот – огненный. Многие относятся к таким, как я, с пренебрежением. Тем более с моей внешностью. Меня судят постоянно: похож на снежного? Четыре крыла? Такого не должно быть! Разве могут водный и воздушный породить такое уродство? Тем более взглянуть друг на друга...</p>
+                    <p>Извольте, с такой внешностью одни беды и угнетения. Ни у кого нет четырёх крыльев... Это изматывает... опустошает... изводит...</p>
+                    <p>А к чему это я? Ах, да.</p>
+                    <p>Дядя Рони знает меня ещё с тринадцати лет. Сначала я помогал бескорыстно, но тот сам решил: работаю – значит, надо платить. Мне нравилось, меня начали замечать, подбадривать. Он стал для меня тем самым дедушкой, которого у меня никогда не было.</p>
+                    <p>Откусив первый кусок, я чуть не заплакал:</p>
+                    <p>– Горячо...</p>
+                    <p>Что ж, по меркам огненных это тёпленько, на троечку, но я воздушный — для нас это пожар во рту. Вот прохвост, никогда не упустит способа надо мной подшутить! От такого абсурда я засмеялся, ведь мне буквально навредил не враг, а обычный горячий пирожок...</p>
+                </div>
             </article>
 
             <nav class="chapter-nav">
@@ -398,8 +680,33 @@
         </div>
     </main>
 
-    <button id="zen-toggle" onclick="toggleZenMode()" title="Режим чтения без отвлечений">👁</button>
-    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+    <div class="floating-controls">
+        <button onclick="toggleZenMode()" title="Скрыть/Показать панель">👁</button>
+        <button onclick="cycleAutoScroll()" id="autoscroll-btn" title="Автоскролл">▶</button>
+        <button onclick="saveCurrentBookmark()" title="Сохранить закладку">🔖</button>
+        <button onclick="scrollToTop()" title="Наверх">↑</button>
+        <button onclick="scrollToBottom()" title="Вниз">↓</button>
+    </div>
+
+    <!-- Кнопка сохранения цитаты (появляется НАД выделением) -->
+    <button id="quote-action-btn" onclick="saveSelectedQuote()">📌 Сохранить цитату</button>
+
+    <!-- Модалка цитат -->
+    <div class="modal-overlay" id="quotes-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>💬 Сохранённые цитаты</span>
+                <button onclick="closeQuotesModal()">✕</button>
+            </div>
+            <div class="modal-body" id="quotes-container"></div>
+            <div class="modal-footer">
+                <button onclick="clearAllQuotes()" style="color: #ff85a1; border-color: rgba(255,133,161,0.4);">Очистить все</button>
+                <button onclick="closeQuotesModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">🔖 Закладка сохранена!</div>
 
     <footer>
         <p>© 2026 Мира Вердель • Все права защищены</p>
@@ -407,16 +714,24 @@
 
     <script>
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
-        let themes = ['dark', 'sepia', 'light'];
-        let themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️' };
+        let themes = ['dark', 'sepia', 'light', 'eco'];
+        let themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️', 'eco': '🔋' };
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
         let currentWidthKey = localStorage.getItem('contentWidthKey') || 'medium';
+        let currentTextAlign = localStorage.getItem('textAlign') || 'justify';
+        let currentLineHeight = parseFloat(localStorage.getItem('lineHeight')) || 1.8;
         let currentView = localStorage.getItem('currentView') || 'info';
         let activeChapter = localStorage.getItem('activeChapter') || 'ch1';
 
+        let scrollInterval = null;
+        let autoScrollSpeed = 0;
+        const speedLabels = { 0: '▶', 1: '1x', 2: '2x', 3: '3x' };
+
+        const chapterTitles = { 'ch1': 'Глава 1' };
+
         const widthMap = {
-            'narrow': window.innerWidth < 600 ? '82%' : '55%',
+            'narrow': window.innerWidth < 600 ? '85%' : '55%',
             'medium': window.innerWidth < 600 ? '92%' : '75%',
             'wide': window.innerWidth < 600 ? '98%' : '92%'
         };
@@ -429,7 +744,10 @@
             applyFontSize(currentFontSize);
             applyTheme(currentTheme);
             setWidth(currentWidthKey);
-            calculateReadingTime('ch1');
+            setTextAlign(currentTextAlign);
+            setLineHeight(currentLineHeight);
+            loadBookmarksUI();
+            updateHeaderHeight();
 
             if (currentView === 'reading') {
                 openChapter(activeChapter, false);
@@ -441,25 +759,64 @@
             }, 50);
         });
 
+        window.addEventListener('resize', updateHeaderHeight);
+
+        function updateHeaderHeight() {
+            let h = document.getElementById('header-wrapper').offsetHeight;
+            document.documentElement.style.setProperty('--header-height', h + 'px');
+        }
+
         window.addEventListener('scroll', () => {
             let winScroll = window.scrollY;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
             
             document.getElementById("progress-bar").style.width = scrolled + "%";
-            document.getElementById("back-to-top").style.display = winScroll > 300 ? "block" : "none";
-
             localStorage.setItem('scrollPos', winScroll);
         });
 
+        /* Аккуратное отображение кнопки цитаты НАД системным меню */
+        document.addEventListener('selectionchange', () => {
+            const selection = window.getSelection();
+            const text = selection.toString().trim();
+            const btn = document.getElementById('quote-action-btn');
+
+            if (text.length > 3 && currentView === 'reading') {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                // Ставим кнопку строго сверху над выделением, чтобы не перекрывать системное меню "Копировать"
+                let topPos = rect.top - 48;
+                if (topPos < 10) topPos = rect.bottom + 10; // Если верх ушёл за экран, ставим вниз
+
+                btn.style.top = topPos + 'px';
+                btn.style.left = Math.min(window.innerWidth - 160, Math.max(10, rect.left + (rect.width / 2) - 65)) + 'px';
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        function showToast(text) {
+            let toast = document.getElementById('toast');
+            toast.innerText = text;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
         }
 
         function changeFontSize(delta) {
             currentFontSize = Math.max(14, Math.min(28, currentFontSize + delta));
             applyFontSize(currentFontSize);
             localStorage.setItem('fontSize', currentFontSize);
+            setTimeout(updateHeaderHeight, 100);
         }
 
         function applyFontSize(size) {
@@ -475,6 +832,29 @@
             let val = widthMap[key] || widthMap['medium'];
             document.documentElement.style.setProperty('--content-width', val);
             localStorage.setItem('contentWidthKey', key);
+            setTimeout(updateHeaderHeight, 100);
+        }
+
+        function toggleTextAlign() {
+            currentTextAlign = currentTextAlign === 'justify' ? 'left' : 'justify';
+            setTextAlign(currentTextAlign);
+            localStorage.setItem('textAlign', currentTextAlign);
+        }
+
+        function setTextAlign(align) {
+            document.documentElement.style.setProperty('--text-align', align);
+            document.getElementById('align-btn').innerText = align === 'justify' ? '≡' : '⇇';
+        }
+
+        function changeLineHeight(delta) {
+            currentLineHeight = Math.max(1.2, Math.min(2.6, currentLineHeight + delta));
+            currentLineHeight = Math.round(currentLineHeight * 10) / 10;
+            setLineHeight(currentLineHeight);
+            localStorage.setItem('lineHeight', currentLineHeight);
+        }
+
+        function setLineHeight(lh) {
+            document.documentElement.style.setProperty('--line-height', lh);
         }
 
         function cycleTheme() {
@@ -485,7 +865,7 @@
         }
 
         function applyTheme(theme) {
-            document.body.classList.remove('theme-sepia', 'theme-light');
+            document.body.classList.remove('theme-sepia', 'theme-light', 'theme-eco');
             if (theme !== 'dark') document.body.classList.add(`theme-${theme}`);
             document.getElementById('theme-btn').innerText = themeIcons[theme];
         }
@@ -494,13 +874,129 @@
             document.body.classList.toggle('zen-mode');
         }
 
-        function calculateReadingTime(chapterId) {
-            let text = document.getElementById(chapterId).innerText;
-            let words = text.trim().split(/\s+/).length;
-            let minutes = Math.ceil(words / 180);
-            let timeElem = document.getElementById(chapterId + '-time');
-            if (timeElem) {
-                timeElem.innerText = `⏳ Время чтения: ~${minutes} мин.`;
+        function triggerSearchPrompt() {
+            const term = prompt("Введите слово для поиска:");
+            if (term !== null) searchText(term);
+        }
+
+        function searchText(term) {
+            const wrapper = document.getElementById('chapters-wrapper');
+            wrapper.querySelectorAll('mark.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.innerText), el);
+                parent.normalize();
+            });
+
+            if (!term || !term.trim()) return;
+
+            const cleanTerm = term.trim();
+            const regex = new RegExp(`(${cleanTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+
+            const paragraphs = wrapper.querySelectorAll('p, h2');
+            let count = 0;
+            let firstMatch = null;
+
+            paragraphs.forEach(p => {
+                if (regex.test(p.innerHTML)) {
+                    p.innerHTML = p.innerHTML.replace(regex, '<mark class="search-highlight">$1</mark>');
+                    if (!firstMatch) firstMatch = p.querySelector('mark.search-highlight');
+                    count++;
+                }
+            });
+
+            if (firstMatch) {
+                if (currentView !== 'reading') openChapter('ch1', false);
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showToast(`Найдено совпадений: ${count}`);
+            } else {
+                showToast('Ничего не найдено');
+            }
+        }
+
+        function cycleAutoScroll() {
+            autoScrollSpeed = (autoScrollSpeed + 1) % 4;
+            document.getElementById('autoscroll-btn').innerText = speedLabels[autoScrollSpeed];
+
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+            }
+
+            if (autoScrollSpeed > 0) {
+                scrollInterval = setInterval(() => {
+                    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                    if (window.scrollY >= maxScroll - 2) {
+                        cycleAutoScroll();
+                    } else {
+                        window.scrollBy(0, autoScrollSpeed);
+                    }
+                }, 30);
+                showToast(`Автоскролл: ${autoScrollSpeed}x`);
+            } else {
+                showToast('Автоскролл выключен');
+            }
+        }
+
+        function saveSelectedQuote() {
+            const selection = window.getSelection();
+            const text = selection ? selection.toString().trim() : '';
+            if (!text) return;
+
+            try {
+                const quotes = JSON.parse(localStorage.getItem('saved_quotes') || '[]');
+                quotes.unshift({ id: Date.now(), text: text, chapter: activeChapter });
+                localStorage.setItem('saved_quotes', JSON.stringify(quotes));
+                
+                selection.removeAllRanges();
+                document.getElementById('quote-action-btn').style.display = 'none';
+                showToast('💬 Цитата сохранена!');
+            } catch (e) {
+                console.error("Ошибка цитаты:", e);
+            }
+        }
+
+        function openQuotesModal() {
+            renderQuotesList();
+            document.getElementById('quotes-modal').classList.add('active');
+        }
+
+        function closeQuotesModal() {
+            document.getElementById('quotes-modal').classList.remove('active');
+        }
+
+        function renderQuotesList() {
+            const container = document.getElementById('quotes-container');
+            const quotes = JSON.parse(localStorage.getItem('saved_quotes') || '[]');
+
+            if (quotes.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--subtext-color);">Сохранённых цитат пока нет.<br><small>Выделите текст в главе, чтобы сохранить.</small></p>';
+                return;
+            }
+
+            container.innerHTML = quotes.map(q => `
+                <div class="quote-item">
+                    «${q.text}»
+                    <div>
+                        <button onclick="deleteQuote(${q.id})">Удалить</button>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            `).join('');
+        }
+
+        function deleteQuote(id) {
+            let quotes = JSON.parse(localStorage.getItem('saved_quotes') || '[]');
+            quotes = quotes.filter(q => q.id !== id);
+            localStorage.setItem('saved_quotes', JSON.stringify(quotes));
+            renderQuotesList();
+            showToast('Цитата удалена');
+        }
+
+        function clearAllQuotes() {
+            if (confirm("Удалить все сохранённые цитаты?")) {
+                localStorage.removeItem('saved_quotes');
+                renderQuotesList();
+                showToast('Все цитаты очищены');
             }
         }
 
@@ -519,6 +1015,7 @@
         }
 
         function showBookInfo() {
+            if (scrollInterval) cycleAutoScroll();
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
             document.getElementById('quick-ch-select').value = "";
@@ -526,6 +1023,95 @@
             localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
+        }
+
+        function saveCurrentBookmark() {
+            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
+            let scroll = Math.round(window.scrollY);
+            let ch = localStorage.getItem('activeChapter') || 'ch1';
+            let title = chapterTitles[ch] || 'Глава';
+            
+            let totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            let percent = totalHeight > 0 ? Math.round((scroll / totalHeight) * 100) : 0;
+
+            let newBookmark = {
+                id: Date.now(),
+                chapter: ch,
+                scrollPos: scroll,
+                label: `${title} (${percent}%)`
+            };
+
+            bookmarks.unshift(newBookmark);
+            if (bookmarks.length > 5) bookmarks.pop();
+            
+            localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
+            loadBookmarksUI();
+            showToast('🔖 Закладка сохранена!');
+        }
+
+        function loadBookmarksUI() {
+            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
+            let select = document.getElementById('bookmarks-select');
+            
+            select.innerHTML = '<option value="" disabled selected>🔖</option>';
+            
+            if (bookmarks.length > 0) {
+                bookmarks.forEach(bm => {
+                    let opt = document.createElement('option');
+                    opt.value = JSON.stringify(bm);
+                    opt.innerText = bm.label;
+                    select.appendChild(opt);
+                });
+
+                let deleteOpt = document.createElement('option');
+                deleteOpt.value = "DELETE_MODE";
+                deleteOpt.innerText = "❌ Удалить...";
+                select.appendChild(deleteOpt);
+            } else {
+                let opt = document.createElement('option');
+                opt.disabled = true;
+                opt.innerText = "Пусто";
+                select.appendChild(opt);
+            }
+        }
+
+        function handleBookmarkAction(val) {
+            if (!val) return;
+
+            if (val === "DELETE_MODE") {
+                deleteBookmarkPrompt();
+                document.getElementById('bookmarks-select').value = "";
+                return;
+            }
+
+            let bm = JSON.parse(val);
+            openChapter(bm.chapter, false);
+            setTimeout(() => {
+                window.scrollTo({ top: bm.scrollPos, behavior: 'smooth' });
+            }, 100);
+            document.getElementById('bookmarks-select').value = "";
+        }
+
+        function deleteBookmarkPrompt() {
+            let bookmarks = JSON.parse(localStorage.getItem('userBookmarks')) || [];
+            if (bookmarks.length === 0) return;
+
+            let listStr = bookmarks.map((bm, index) => `${index + 1}. ${bm.label}`).join('\n');
+            let choice = prompt(`Введи номер закладки для удаления (1-${bookmarks.length}) или '0' для очистки всех:\n\n${listStr}`);
+
+            if (choice === '0') {
+                localStorage.removeItem('userBookmarks');
+                loadBookmarksUI();
+                showToast('Все закладки удалены');
+            } else if (choice && !isNaN(choice)) {
+                let idx = parseInt(choice) - 1;
+                if (idx >= 0 && idx < bookmarks.length) {
+                    bookmarks.splice(idx, 1);
+                    localStorage.setItem('userBookmarks', JSON.stringify(bookmarks));
+                    loadBookmarksUI();
+                    showToast('Закладка удалена');
+                }
+            }
         }
     </script>
 </body>
