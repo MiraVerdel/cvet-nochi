@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Цвет ночи • Мира Вердель</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
             --accent-color: #be95ff;
             --subtext-color: #9f86c0;
             --border-color: #2a1f3d;
+            --content-width: 80%;
         }
 
         body.theme-sepia {
@@ -69,16 +71,23 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        body.zen-mode header {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 700px;
+            width: var(--content-width);
             margin: 0 auto;
             gap: 8px;
+            transition: width 0.2s ease;
         }
 
         .controls-group {
@@ -101,8 +110,8 @@
             touch-action: manipulation;
         }
 
-        #font-select {
-            max-width: 110px;
+        #font-select, #quick-ch-select {
+            max-width: 120px;
         }
 
         .book-title {
@@ -121,10 +130,20 @@
         }
 
         .reader-container {
-            max-width: 700px;
+            width: var(--content-width);
             margin: 0 auto;
-            padding: 20px 15px;
+            padding: 20px 0;
             font-size: 18px;
+            transition: width 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .reading-time {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--subtext-color);
+            margin-bottom: 15px;
+            font-style: italic;
         }
 
         .book-cover {
@@ -219,7 +238,7 @@
         .chapter h2 {
             font-size: 1.4em;
             color: var(--accent-color);
-            margin: 10px 0 20px;
+            margin: 10px 0 5px;
             text-align: center;
             font-weight: 600;
         }
@@ -244,11 +263,9 @@
             border-top: 1px solid var(--border-color);
         }
 
-        #back-to-top {
+        #back-to-top, #zen-toggle {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            display: none;
             background: var(--btn-bg);
             color: var(--accent-color);
             border: 1px solid var(--border-color);
@@ -259,6 +276,15 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             z-index: 1000;
+        }
+
+        #back-to-top {
+            right: 20px;
+            display: none;
+        }
+
+        #zen-toggle {
+            right: 70px;
         }
 
         footer {
@@ -277,17 +303,24 @@
         <div class="top-bar">
             <button onclick="showBookInfo()">🏛 К книге</button>
             <div class="controls-group">
+                <select id="quick-ch-select" onchange="openChapter(this.value)">
+                    <option value="" disabled selected>Главы...</option>
+                    <option value="ch1">Глава 1</option>
+                </select>
                 <select id="font-select" onchange="setFontFamily(this.value)">
                     <option value="'Cormorant Garamond', serif">Garamond</option>
                     <option value="Georgia, serif">Georgia</option>
                     <option value="'Lora', serif">Lora</option>
                     <option value="'Merriweather', serif">Merriweather</option>
                 </select>
+                <select id="width-select" onchange="setWidth(this.value)" title="Ширина текста">
+                    <option value="narrow">Узкая</option>
+                    <option value="medium" selected>Средняя</option>
+                    <option value="wide">Широкая</option>
+                </select>
                 <button onclick="cycleTheme()" id="theme-btn" title="Сменить тему">🌙</button>
                 <button onclick="changeFontSize(-1)">A-</button>
                 <button onclick="changeFontSize(1)">A+</button>
-                <button onclick="changeLineHeight(-0.1)" title="Уменьшить интервал">↕-</button>
-                <button onclick="changeLineHeight(0.1)" title="Увеличить интервал">↕+</button>
             </div>
         </div>
         <h1 class="book-title">ЦВЕТ НОЧИ</h1>
@@ -333,6 +366,7 @@
         <div id="chapters-wrapper" style="display: none;">
             <article class="chapter" id="ch1">
                 <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
+                <div class="reading-time" id="ch1-time"></div>
                 <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
                 <p>Северная башня встретила меня тепло: одиночество, когда рано утром народа немного, и парочка моих коллег-стражников.</p>
                 <p>– Вот дерьмо...</p>
@@ -364,6 +398,7 @@
         </div>
     </main>
 
+    <button id="zen-toggle" onclick="toggleZenMode()" title="Режим чтения без отвлечений">👁</button>
     <button id="back-to-top" onclick="scrollToTop()">↑</button>
 
     <footer>
@@ -372,23 +407,32 @@
 
     <script>
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 18;
-        let currentLineHeight = parseFloat(localStorage.getItem('lineHeight')) || 1.8;
         let themes = ['dark', 'sepia', 'light'];
         let themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️' };
         let currentTheme = localStorage.getItem('theme') || 'dark';
         let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
+        let currentWidthKey = localStorage.getItem('contentWidthKey') || 'medium';
         let currentView = localStorage.getItem('currentView') || 'info';
+        let activeChapter = localStorage.getItem('activeChapter') || 'ch1';
+
+        const widthMap = {
+            'narrow': window.innerWidth < 600 ? '82%' : '55%',
+            'medium': window.innerWidth < 600 ? '92%' : '75%',
+            'wide': window.innerWidth < 600 ? '98%' : '92%'
+        };
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('font-select').value = currentFontFamily;
+            document.getElementById('width-select').value = currentWidthKey;
+            
             setFontFamily(currentFontFamily);
             applyFontSize(currentFontSize);
-            applyLineHeight(currentLineHeight);
             applyTheme(currentTheme);
+            setWidth(currentWidthKey);
+            calculateReadingTime('ch1');
 
             if (currentView === 'reading') {
-                document.getElementById('book-info').style.display = 'none';
-                document.getElementById('chapters-wrapper').style.display = 'block';
+                openChapter(activeChapter, false);
             }
 
             setTimeout(() => {
@@ -397,7 +441,6 @@
             }, 50);
         });
 
-        // Индикатор прокрутки
         window.addEventListener('scroll', () => {
             let winScroll = window.scrollY;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -423,20 +466,15 @@
             document.getElementById('reader').style.fontSize = size + 'px';
         }
 
-        function changeLineHeight(delta) {
-            currentLineHeight = Math.max(1.3, Math.min(2.2, currentLineHeight + delta));
-            currentLineHeight = Math.round(currentLineHeight * 10) / 10;
-            applyLineHeight(currentLineHeight);
-            localStorage.setItem('lineHeight', currentLineHeight);
-        }
-
-        function applyLineHeight(lh) {
-            document.getElementById('reader').style.lineHeight = lh;
-        }
-
         function setFontFamily(fontFamily) {
             document.getElementById('reader').style.fontFamily = fontFamily;
             localStorage.setItem('fontFamily', fontFamily);
+        }
+
+        function setWidth(key) {
+            let val = widthMap[key] || widthMap['medium'];
+            document.documentElement.style.setProperty('--content-width', val);
+            localStorage.setItem('contentWidthKey', key);
         }
 
         function cycleTheme() {
@@ -452,17 +490,39 @@
             document.getElementById('theme-btn').innerText = themeIcons[theme];
         }
 
-        function openChapter(chapterId) {
+        function toggleZenMode() {
+            document.body.classList.toggle('zen-mode');
+        }
+
+        function calculateReadingTime(chapterId) {
+            let text = document.getElementById(chapterId).innerText;
+            let words = text.trim().split(/\s+/).length;
+            let minutes = Math.ceil(words / 180);
+            let timeElem = document.getElementById(chapterId + '-time');
+            if (timeElem) {
+                timeElem.innerText = `⏳ Время чтения: ~${minutes} мин.`;
+            }
+        }
+
+        function openChapter(chapterId, resetScroll = true) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
+            document.getElementById('quick-ch-select').value = chapterId;
+            
             localStorage.setItem('currentView', 'reading');
-            localStorage.setItem('scrollPos', 0);
-            scrollToTop();
+            localStorage.setItem('activeChapter', chapterId);
+            
+            if (resetScroll) {
+                localStorage.setItem('scrollPos', 0);
+                scrollToTop();
+            }
         }
 
         function showBookInfo() {
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
+            document.getElementById('quick-ch-select').value = "";
+            
             localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
