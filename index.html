@@ -14,6 +14,21 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+            -webkit-focus-ring-color: transparent !important;
+        }
+
+        button, select, input, a {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        button:focus, select:focus, input:focus, a:focus,
+        button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
         }
 
         .chapter-content p { 
@@ -24,7 +39,7 @@
         ::selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
         ::-moz-selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
         
-        :root { --bg-color: #0d0b14; --card-bg: #130f1e; --btn-bg: #1c152c; --btn-active: #be95ff; --text-color: #e2dfed; --accent-color: #be95ff; --subtext-color: #9f86c0; --border-color: #2a1f3d; --content-width: 92%; --line-height: 1.8; --text-align: justify; --header-height: 110px; --highlight-bg: rgba(190, 149, 255, 0.4); --highlight-color: #ffffff; --highlight-border: #be95ff; }
+        :root { --bg-color: #0d0b14; --card-bg: #130f1e; --btn-bg: #1c152c; --btn-active: #be95ff; --text-color: #e2dfed; --accent-color: #be95ff; --subtext-color: #9f86c0; --border-color: #2a1f3d; --content-width: 92%; --line-height: 1.8; --text-align: justify; --header-height: 90px; --highlight-bg: rgba(190, 149, 255, 0.4); --highlight-color: #ffffff; --highlight-border: #be95ff; }
         body.theme-sepia { --bg-color: #f4ecd8; --card-bg: #e8dfc8; --btn-bg: #ded3b8; --btn-active: #8c5a2b; --text-color: #433422; --accent-color: #8c5a2b; --subtext-color: #6e5438; --border-color: #c8bc9e; --highlight-bg: rgba(140, 90, 43, 0.3); --highlight-color: #2c1d0e; --highlight-border: #8c5a2b; }
         body.theme-light { --bg-color: #f8f9fa; --card-bg: #ffffff; --btn-bg: #f1f3f5; --btn-active: #6741d9; --text-color: #212529; --accent-color: #6741d9; --subtext-color: #495057; --border-color: #dee2e6; --highlight-bg: rgba(103, 65, 217, 0.25); --highlight-color: #100038; --highlight-border: #6741d9; }
         body.theme-eco { --bg-color: #000000; --card-bg: #000000; --btn-bg: #000000; --btn-active: #333333; --text-color: #888888; --accent-color: #aaaaaa; --subtext-color: #555555; --border-color: #1a1a1a; --highlight-bg: #333333; --highlight-color: #ffffff; --highlight-border: #555555; }
@@ -32,11 +47,10 @@
         body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Cormorant Garamond', Georgia, serif; margin: 0; padding: 0; line-height: var(--line-height); transition: background-color 0.3s, color 0.3s; }
         
         @media (max-width: 600px) { 
-            .header-container .header-top-row { flex-wrap: wrap; justify-content: center; } 
+            .header-container .header-top-row { justify-content: space-between; } 
             .header-controls-row { flex-direction: column; gap: 4px; } 
             .control-group { flex-wrap: wrap; justify-content: center; } 
-            .btn-home, #theme-btn { font-size: 0.7rem; padding: 2px 6px; } 
-            .book-title { font-size: 0.75rem; } 
+            .btn-home, #theme-btn { font-size: 0.75rem; padding: 3px 8px; } 
             .floating-controls button { width: 32px; height: 32px; font-size: 0.8rem; } 
         }
         
@@ -48,26 +62,29 @@
         body.zen-mode .header-wrapper { transform: translateY(-100%); opacity: 0; pointer-events: none; }
         .header-container { width: var(--content-width); max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
         .header-top-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-        .header-title-box { text-align: center; flex-grow: 1; overflow: hidden; padding: 2px 0; }
-        .book-title { margin: 0; font-size: 0.85rem; color: var(--text-color); letter-spacing: 0.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
-        .author-name { margin: 0; font-size: 0.7rem; font-weight: 600; color: var(--accent-color); opacity: 0.9; line-height: 1.2; }
         
         .header-controls-row { display: flex; justify-content: center; align-items: center; gap: 4px; flex-wrap: wrap; }
         .control-group { display: flex; align-items: center; gap: 3px; background: rgba(127, 127, 127, 0.08); padding: 2px 4px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 100%; }
         select, button { background-color: var(--btn-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 4px 7px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; touch-action: manipulation; white-space: nowrap; transition: all 0.2s; }
+        select option { background-color: var(--card-bg); color: var(--text-color); }
         select:active, button:active { background-color: var(--btn-active) !important; color: #ffffff !important; border-color: var(--btn-active) !important; }
         .btn-home { font-weight: 600; color: var(--accent-color); padding: 4px 8px; }
         .btn-pair { display: inline-flex; align-items: center; background-color: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; }
         .btn-pair button { border: none; border-radius: 0; padding: 3px 6px; background: transparent; }
         .btn-pair button:first-child { border-right: 1px solid var(--border-color); }
-        #font-select { max-width: 85px; }
+        #font-select { max-width: 110px; }
         #width-select { max-width: 80px; }
-        #quick-ch-select { max-width: 90px; }
+        .btn-ch-trigger { max-width: 110px; text-overflow: ellipsis; overflow: hidden; font-weight: 600; color: var(--accent-color); }
         .btn-bookmarks { font-weight: 600; color: var(--accent-color); }
         
         .reader-container { width: var(--content-width); max-width: 800px; margin: 0 auto; padding: calc(var(--header-height) + 15px) 0 80px; font-size: 18px; box-sizing: border-box; }
         body.zen-mode .reader-container { padding-top: 20px; }
-        .book-cover { width: 140px; aspect-ratio: 2 / 3; object-fit: cover; display: block; margin: 0 auto 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        
+        .main-book-header { text-align: center; margin-bottom: 20px; }
+        .book-cover { width: 140px; aspect-ratio: 2 / 3; object-fit: cover; display: block; margin: 0 auto 12px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .main-book-title { margin: 0 0 4px; font-size: 1.1rem; color: var(--text-color); letter-spacing: 0.5px; font-weight: 700; line-height: 1.3; text-transform: uppercase; }
+        .main-author-name { margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--accent-color); opacity: 0.9; }
+
         .book-meta-card, .book-description, .table-of-contents { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
         .meta-badge-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
         .genre-badge { background-color: var(--btn-bg); color: var(--accent-color); border: 1px solid var(--border-color); padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; }
@@ -80,14 +97,13 @@
         .ch-num { color: var(--accent-color); font-weight: 600; }
         
         .chapter h2 { font-size: 1.4em; color: var(--accent-color); margin: 0 0 20px; text-align: center; font-weight: 600; }
-        .chapter p { margin-bottom: 0.8em; text-indent: 1.5em; text-align: var(--text-align); hyphens: auto; -webkit-hyphens: auto; }
+        .chapter p { font-size: 1em; margin-bottom: 0.8em; text-indent: 1.5em; text-align: var(--text-align); hyphens: auto; -webkit-hyphens: auto; }
         .chapter p:first-of-type { text-indent: 0; }
         .chapter-nav { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border-color); }
         
         .floating-controls { position: fixed; bottom: 20px; right: 12px; display: flex; flex-direction: column; gap: 8px; z-index: 2000; }
         .floating-controls button { background: var(--btn-bg); color: var(--accent-color); border: 1px solid var(--border-color); border-radius: 50%; width: 38px; height: 38px; font-size: 1rem; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: opacity 0.3s, transform 0.3s; }
         
-        /* ВРЕМЕННЫЕ КНОПКИ (СХОЖИЕ С КРЕСТИКОМ ПОИСКА) */
         #clear-highlights-btn, #save-quote-floating-btn { display: none; opacity: 0; transform: scale(0.8); }
         #clear-highlights-btn.visible, #save-quote-floating-btn.visible { display: flex; opacity: 1; transform: scale(1); }
         
@@ -95,10 +111,17 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-overlay.active { display: flex; }
-        .modal-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 500px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
+        .modal-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; width: 100%; max-width: 500px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.6); color: var(--text-color); }
         .modal-header { padding: 12px 15px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--accent-color); }
         .modal-body { padding: 15px; overflow-y: auto; flex-grow: 1; }
         .modal-footer { padding: 10px 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px; }
+        
+        .btn-clear-all { color: #ff85a1 !important; border-color: rgba(255, 133, 161, 0.4) !important; background: transparent !important; }
+        .btn-clear-all:active { background: rgba(255, 133, 161, 0.2) !important; color: #ff85a1 !important; border-color: #ff85a1 !important; }
+
+        .chapter-option-btn { width: 100%; text-align: left; background: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; color: var(--text-color); font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+        .chapter-option-btn.active { border-color: var(--accent-color); background: rgba(190, 149, 255, 0.1); font-weight: 600; }
+
         .quote-item, .bookmark-item, .search-result-item { background: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; margin-bottom: 10px; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         .search-result-item .result-info { flex: 1; min-width: 0; }
         .search-result-item .result-chapter { font-weight: 600; color: var(--accent-color); font-size: 0.85rem; }
@@ -126,10 +149,6 @@
             <div class="header-container">
                 <div class="header-top-row">
                     <button class="btn-home" onclick="showBookInfo()">🏛 Инфо</button>
-                    <div class="header-title-box">
-                        <h1 class="book-title">ЦВЕТ НОЧИ: ЛЕГЕНДА АМЕТИСТА</h1>
-                        <p class="author-name">Мира Вердель • Том 1</p>
-                    </div>
                     <button onclick="cycleTheme()" id="theme-btn" title="Сменить тему">🌙</button>
                 </div>
                 <div class="header-controls-row">
@@ -137,16 +156,14 @@
                         <button onclick="openSearchModal()" title="Поиск">🔍</button>
                         <button onclick="openQuotesModal()" title="Цитаты">💬</button>
                         <button onclick="openBookmarksModal()" class="btn-bookmarks" title="Закладки">🔖</button>
-                        <select id="quick-ch-select" onchange="openChapter(this.value)">
-                            <option value="ch1">Глава 1</option>
-                        </select>
+                        <button class="btn-ch-trigger" id="ch-select-trigger" onclick="openChapterSelectModal()">Глава 1</button>
                     </div>
                     <div class="control-group">
                         <select id="font-select" onchange="setFontFamily(this.value)">
-                            <option value="'Cormorant Garamond', serif">Garamond</option>
+                            <option value="'Cormorant Garamond', Georgia, serif">Garamond</option>
                             <option value="Georgia, serif">Georgia</option>
-                            <option value="'Lora', serif">Lora</option>
-                            <option value="'Merriweather', serif">Merriweather</option>
+                            <option value="'Lora', Georgia, serif">Lora</option>
+                            <option value="'Merriweather', Georgia, serif">Merriweather</option>
                         </select>
                         <select id="width-select" onchange="setWidth(this.value)" title="Ширина">
                             <option value="narrow">Узкая</option>
@@ -172,7 +189,11 @@
 
     <main class="reader-container" id="reader">
         <section id="book-info">
-            <img src="https://i.ibb.co/Ndhf92GR/229.jpg" alt="Обложка Цвет Ночи" class="book-cover">
+            <div class="main-book-header">
+                <img src="https://i.ibb.co/B5fZCtqp/231-20260908193057.jpg" alt="Обложка Цвет Ночи" class="book-cover">
+                <h1 class="main-book-title">ЦВЕТ НОЧИ: ЛЕГЕНДА АМЕТИСТА</h1>
+                <p class="main-author-name">Мира Вердель • Том 1</p>
+            </div>
             <div class="book-meta-card">
                 <div class="meta-badge-row">
                     <span class="genre-badge">Тёмное фэнтези</span>
@@ -237,13 +258,23 @@
         <button onclick="toggleZenMode()" title="Скрыть/Показать панель">👁</button>
         <button onclick="cycleAutoScroll()" id="autoscroll-btn" title="Автоскролл">▶</button>
         <button onclick="saveCurrentBookmark()" title="Сохранить закладку">🔖</button>
-        
-        <!-- ВРЕМЕННАЯ КНОПКА СОХРАНЕНИЯ ЦИТАТЫ (ПОЯВЛЯЕТСЯ ТОЛЬКО ПРИ ВЫДЕЛЕНИИ) -->
         <button onclick="saveQuickQuote()" id="save-quote-floating-btn" title="Сохранить цитату">💬</button>
-        
         <button onclick="clearHighlights()" id="clear-highlights-btn" title="Снять выделение">❌</button>
         <button onclick="scrollToTop()" title="Наверх">↑</button>
         <button onclick="scrollToBottom()" title="Вниз">↓</button>
+    </div>
+
+    <div class="modal-overlay" id="chapter-select-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span>📖 Выбор главы</span>
+                <button onclick="closeChapterSelectModal()">✕</button>
+            </div>
+            <div class="modal-body" id="chapter-select-container"></div>
+            <div class="modal-footer">
+                <button onclick="closeChapterSelectModal()">Закрыть</button>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="quotes-modal">
@@ -254,7 +285,7 @@
             </div>
             <div class="modal-body" id="quotes-container"></div>
             <div class="modal-footer">
-                <button onclick="confirmClearQuotes()" style="color: #ff85a1; border-color: rgba(255,133,161,0.4);">Очистить все</button>
+                <button class="btn-clear-all" onclick="confirmClearQuotes()">Очистить все</button>
                 <button onclick="closeQuotesModal()">Закрыть</button>
             </div>
         </div>
@@ -268,7 +299,7 @@
             </div>
             <div class="modal-body" id="bookmarks-container"></div>
             <div class="modal-footer">
-                <button onclick="confirmClearBookmarks()" style="color: #ff85a1; border-color: rgba(255,133,161,0.4);">Очистить все</button>
+                <button class="btn-clear-all" onclick="confirmClearBookmarks()">Очистить все</button>
                 <button onclick="closeBookmarksModal()">Закрыть</button>
             </div>
         </div>
@@ -305,7 +336,7 @@
                 Вы уверены?
             </div>
             <div class="modal-footer" style="justify-content: center; gap: 15px;">
-                <button id="confirm-btn-yes" style="color: #ff85a1; border-color: rgba(255,133,161,0.4); font-weight: 600;">Да, удалить</button>
+                <button id="confirm-btn-yes" class="btn-clear-all" style="font-weight: 600;">Да, удалить</button>
                 <button onclick="closeConfirmModal()">Отмена</button>
             </div>
         </div>
@@ -322,7 +353,7 @@
         const themes = ['dark', 'sepia', 'light', 'eco'];
         const themeIcons = { 'dark': '🌙', 'sepia': '📜', 'light': '☀️', 'eco': '🔋' };
         let currentTheme = localStorage.getItem('theme') || 'dark';
-        let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', serif";
+        let currentFontFamily = localStorage.getItem('fontFamily') || "'Cormorant Garamond', Georgia, serif";
         let currentWidthKey = localStorage.getItem('contentWidthKey') || 'medium';
         let currentTextAlign = localStorage.getItem('textAlign') || 'justify';
         let currentLineHeight = parseFloat(localStorage.getItem('lineHeight')) || 1.8;
@@ -416,7 +447,7 @@
         }
 
         function changeFontSize(delta) {
-            currentFontSize = Math.max(14, Math.min(28, currentFontSize + delta));
+            currentFontSize = Math.max(12, Math.min(32, currentFontSize + delta));
             applyFontSize(currentFontSize);
             localStorage.setItem('fontSize', currentFontSize);
             setTimeout(updateHeaderHeight, 100);
@@ -477,7 +508,26 @@
             document.body.classList.toggle('zen-mode');
         }
 
-        /* УПРАВЛЕНИЕ ПОЯВЛЕНИЕМ ВРЕМЕННОЙ КНОПКИ ЦИТАТЫ */
+        function openChapterSelectModal() {
+            const container = document.getElementById('chapter-select-container');
+            container.innerHTML = Object.keys(chapterTitles).map(id => `
+                <button class="chapter-option-btn ${id === activeChapter ? 'active' : ''}" onclick="selectChapterFromModal('${id}')">
+                    <span>${chapterTitles[id]}</span>
+                    ${id === activeChapter ? '<span>✓</span>' : ''}
+                </button>
+            `).join('');
+            document.getElementById('chapter-select-modal').classList.add('active');
+        }
+
+        function closeChapterSelectModal() {
+            document.getElementById('chapter-select-modal').classList.remove('active');
+        }
+
+        function selectChapterFromModal(chapterId) {
+            openChapter(chapterId);
+            closeChapterSelectModal();
+        }
+
         let selectionCheckTimeout = null;
 
         document.addEventListener('selectionchange', () => {
@@ -818,7 +868,9 @@
         function openChapter(chapterId, resetScroll = true) {
             document.getElementById('book-info').style.display = 'none';
             document.getElementById('chapters-wrapper').style.display = 'block';
-            document.getElementById('quick-ch-select').value = chapterId;
+            
+            activeChapter = chapterId;
+            document.getElementById('ch-select-trigger').innerText = chapterTitles[chapterId] || 'Глава';
             
             localStorage.setItem('currentView', 'reading');
             localStorage.setItem('activeChapter', chapterId);
@@ -833,7 +885,6 @@
             if (scrollInterval) cycleAutoScroll();
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
-            document.getElementById('quick-ch-select').value = "ch1";
             
             localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
