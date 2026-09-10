@@ -16,7 +16,7 @@
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent !important;
             outline: none !important;
-            -webkit-focus-ring-color: transparent !important;
+            box-shadow: none !important;
         }
 
         button, select, input, a {
@@ -39,32 +39,41 @@
         ::selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
         ::-moz-selection { background-color: var(--highlight-bg) !important; color: var(--highlight-color) !important; }
         
-        :root { --bg-color: #0d0b14; --card-bg: #130f1e; --btn-bg: #1c152c; --btn-active: #be95ff; --text-color: #e2dfed; --accent-color: #be95ff; --subtext-color: #9f86c0; --border-color: #2a1f3d; --content-width: 92%; --line-height: 1.8; --text-align: justify; --header-height: 90px; --highlight-bg: rgba(190, 149, 255, 0.4); --highlight-color: #ffffff; --highlight-border: #be95ff; }
+        :root { --bg-color: #0d0b14; --card-bg: #130f1e; --btn-bg: #1c152c; --btn-active: #be95ff; --text-color: #e2dfed; --accent-color: #be95ff; --subtext-color: #9f86c0; --border-color: #2a1f3d; --content-width: 92%; --line-height: 1.8; --text-align: justify; --header-height: 110px; --highlight-bg: rgba(190, 149, 255, 0.4); --highlight-color: #ffffff; --highlight-border: #be95ff; }
         body.theme-sepia { --bg-color: #f4ecd8; --card-bg: #e8dfc8; --btn-bg: #ded3b8; --btn-active: #8c5a2b; --text-color: #433422; --accent-color: #8c5a2b; --subtext-color: #6e5438; --border-color: #c8bc9e; --highlight-bg: rgba(140, 90, 43, 0.3); --highlight-color: #2c1d0e; --highlight-border: #8c5a2b; }
         body.theme-light { --bg-color: #f8f9fa; --card-bg: #ffffff; --btn-bg: #f1f3f5; --btn-active: #6741d9; --text-color: #212529; --accent-color: #6741d9; --subtext-color: #495057; --border-color: #dee2e6; --highlight-bg: rgba(103, 65, 217, 0.25); --highlight-color: #100038; --highlight-border: #6741d9; }
         body.theme-eco { --bg-color: #000000; --card-bg: #000000; --btn-bg: #000000; --btn-active: #333333; --text-color: #888888; --accent-color: #aaaaaa; --subtext-color: #555555; --border-color: #1a1a1a; --highlight-bg: #333333; --highlight-color: #ffffff; --highlight-border: #555555; }
         
         body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Cormorant Garamond', Georgia, serif; margin: 0; padding: 0; line-height: var(--line-height); transition: background-color 0.3s, color 0.3s; }
         
-        @media (max-width: 600px) { 
-            .header-container .header-top-row { justify-content: space-between; } 
-            .header-controls-row { flex-direction: column; gap: 4px; } 
-            .control-group { flex-wrap: wrap; justify-content: center; } 
-            .btn-home, #theme-btn { font-size: 0.75rem; padding: 3px 8px; } 
-            .floating-controls button { width: 32px; height: 32px; font-size: 0.8rem; } 
-        }
-        
         #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 2001; transition: width 0.1s linear; }
         
+        #progress-text {
+            position: fixed;
+            top: 5px;
+            right: 12px;
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            background: rgba(0,0,0,0.4);
+            padding: 2px 6px;
+            border-radius: 10px;
+            z-index: 2002;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            font-weight: 600;
+        }
+
         .header-wrapper { position: fixed; top: 0; left: 0; right: 0; z-index: 2000; transform: translateY(0); opacity: 1; transition: transform 0.3s, opacity 0.3s; }
         header { padding: 8px 6px; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35); backdrop-filter: blur(10px); }
         body.theme-eco header { box-shadow: none; }
         body.zen-mode .header-wrapper { transform: translateY(-100%); opacity: 0; pointer-events: none; }
-        .header-container { width: var(--content-width); max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
+        
+        .header-container { width: 100%; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
         .header-top-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
         
-        .header-controls-row { display: flex; justify-content: center; align-items: center; gap: 4px; flex-wrap: wrap; }
-        .control-group { display: flex; align-items: center; gap: 3px; background: rgba(127, 127, 127, 0.08); padding: 2px 4px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 100%; }
+        .header-controls-row { display: flex; justify-content: center; align-items: center; gap: 4px; flex-wrap: wrap; max-width: 100%; }
+        .control-group { display: flex; align-items: center; gap: 3px; background: rgba(127, 127, 127, 0.08); padding: 2px 4px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 100%; overflow-x: auto; }
+        
         select, button { background-color: var(--btn-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 4px 7px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; touch-action: manipulation; white-space: nowrap; transition: all 0.2s; }
         select option { background-color: var(--card-bg); color: var(--text-color); }
         select:active, button:active { background-color: var(--btn-active) !important; color: #ffffff !important; border-color: var(--btn-active) !important; }
@@ -74,7 +83,7 @@
         .btn-pair button:first-child { border-right: 1px solid var(--border-color); }
         #font-select { max-width: 110px; }
         #width-select { max-width: 80px; }
-        .btn-ch-trigger { max-width: 110px; text-overflow: ellipsis; overflow: hidden; font-weight: 600; color: var(--accent-color); }
+        .btn-ch-trigger { max-width: 120px; text-overflow: ellipsis; overflow: hidden; font-weight: 600; color: var(--accent-color); }
         .btn-bookmarks { font-weight: 600; color: var(--accent-color); }
         
         .reader-container { width: var(--content-width); max-width: 800px; margin: 0 auto; padding: calc(var(--header-height) + 15px) 0 80px; font-size: 18px; box-sizing: border-box; }
@@ -96,6 +105,14 @@
         .chapters-list button { width: 100%; display: flex; gap: 10px; text-align: left; background-color: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 12px; font-size: 0.95rem; }
         .ch-num { color: var(--accent-color); font-weight: 600; }
         
+        .reading-time {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--subtext-color);
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
         .chapter h2 { font-size: 1.4em; color: var(--accent-color); margin: 0 0 20px; text-align: center; font-weight: 600; }
         .chapter p { font-size: 1em; margin-bottom: 0.8em; text-indent: 1.5em; text-align: var(--text-align); hyphens: auto; -webkit-hyphens: auto; }
         .chapter p:first-of-type { text-indent: 0; }
@@ -143,6 +160,7 @@
 <body>
 
     <div id="progress-bar"></div>
+    <div id="progress-text">0%</div>
 
     <div class="header-wrapper" id="header-wrapper">
         <header id="header">
@@ -156,7 +174,7 @@
                         <button onclick="openSearchModal()" title="Поиск">🔍</button>
                         <button onclick="openQuotesModal()" title="Цитаты">💬</button>
                         <button onclick="openBookmarksModal()" class="btn-bookmarks" title="Закладки">🔖</button>
-                        <button class="btn-ch-trigger" id="ch-select-trigger" onclick="openChapterSelectModal()">Глава 1</button>
+                        <button class="btn-ch-trigger" id="ch-select-trigger" onclick="openChapterSelectModal()">Инфо</button>
                     </div>
                     <div class="control-group">
                         <select id="font-select" onchange="setFontFamily(this.value)">
@@ -220,6 +238,7 @@
 
         <div id="chapters-wrapper" style="display: none;">
             <article class="chapter" id="ch1">
+                <div class="reading-time" id="reading-time-ch1">⏱ Время чтения: ~2 мин</div>
                 <h2>Глава 1. Горячие пирожки и четыре крыла</h2>
                 <div class="chapter-content">
                     <p>Крылья ловили потоки теплого воздуха. Сбежать от угнетающей атмосферы было окрыляюще – не хотелось находиться там, где пахнет враждебностью к себе подобным и непринятием.</p>
@@ -379,9 +398,12 @@
             setTextAlign(currentTextAlign);
             setLineHeight(currentLineHeight);
             updateHeaderHeight();
+            calculateReadingTimes();
 
             if (currentView === 'reading') {
                 openChapter(activeChapter, false);
+            } else {
+                showBookInfo();
             }
 
             setTimeout(() => {
@@ -400,10 +422,26 @@
         window.addEventListener('scroll', () => {
             const winScroll = window.scrollY;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            const scrolled = height > 0 ? Math.round((winScroll / height) * 100) : 0;
+            
             document.getElementById("progress-bar").style.width = scrolled + "%";
+            document.getElementById("progress-text").innerText = scrolled + "%";
+            
             localStorage.setItem('scrollPos', winScroll);
         });
+
+        function calculateReadingTimes() {
+            const chapters = document.querySelectorAll('article.chapter');
+            chapters.forEach(ch => {
+                const text = ch.querySelector('.chapter-content').innerText;
+                const words = text.trim().split(/\s+/).length;
+                const minutes = Math.max(1, Math.ceil(words / 180));
+                const timeEl = document.getElementById(`reading-time-${ch.id}`);
+                if (timeEl) {
+                    timeEl.innerText = `⏱ Время чтения: ~${minutes} мин`;
+                }
+            });
+        }
 
         function showToast(text) {
             const toast = document.getElementById('toast');
@@ -511,9 +549,9 @@
         function openChapterSelectModal() {
             const container = document.getElementById('chapter-select-container');
             container.innerHTML = Object.keys(chapterTitles).map(id => `
-                <button class="chapter-option-btn ${id === activeChapter ? 'active' : ''}" onclick="selectChapterFromModal('${id}')">
+                <button class="chapter-option-btn ${currentView === 'reading' && id === activeChapter ? 'active' : ''}" onclick="selectChapterFromModal('${id}')">
                     <span>${chapterTitles[id]}</span>
-                    ${id === activeChapter ? '<span>✓</span>' : ''}
+                    ${currentView === 'reading' && id === activeChapter ? '<span>✓</span>' : ''}
                 </button>
             `).join('');
             document.getElementById('chapter-select-modal').classList.add('active');
@@ -542,13 +580,7 @@
                 }
 
                 const text = selection.toString().trim();
-                const range = selection.getRangeAt(0);
-                const activeChapterEl = document.getElementById(activeChapter);
-                const contentArea = activeChapterEl ? activeChapterEl.querySelector('.chapter-content') : null;
-
-                const isInsideContent = contentArea && contentArea.contains(range.startContainer) && contentArea.contains(range.endContainer);
-
-                if (text.length > 2 && isInsideContent) {
+                if (text.length > 2) {
                     selectedQuoteText = text;
                     showQuoteButton();
                 } else {
@@ -870,6 +902,7 @@
             document.getElementById('chapters-wrapper').style.display = 'block';
             
             activeChapter = chapterId;
+            currentView = 'reading';
             document.getElementById('ch-select-trigger').innerText = chapterTitles[chapterId] || 'Глава';
             
             localStorage.setItem('currentView', 'reading');
@@ -886,6 +919,8 @@
             document.getElementById('chapters-wrapper').style.display = 'none';
             document.getElementById('book-info').style.display = 'block';
             
+            currentView = 'info';
+            document.getElementById('ch-select-trigger').innerText = 'Инфо';
             localStorage.setItem('currentView', 'info');
             localStorage.setItem('scrollPos', 0);
             scrollToTop();
